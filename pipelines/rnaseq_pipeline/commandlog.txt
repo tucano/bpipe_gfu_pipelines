@@ -1,0 +1,85 @@
+
+####################################################################################################
+# Starting pipeline at Wed Sep 11 16:19:14 CEST 2013
+# Input files:  null
+# Output Log:  .bpipe/logs/31287.log
+# Stage prepare_sample
+FCID=1
+# Stage next
+echo FCID is now 
+
+
+####################################################################################################
+# Starting pipeline at Wed Sep 11 16:19:50 CEST 2013
+# Input files:  null
+# Output Log:  .bpipe/logs/31377.log
+# Stage prepare_sample
+FCID=1
+# Stage next
+echo FCID is now 
+
+
+####################################################################################################
+# Starting pipeline at Wed Sep 11 16:22:05 CEST 2013
+# Input files:  null
+# Output Log:  .bpipe/logs/31977.log
+# Stage prepare_sample
+echo FCID is now 2
+# Stage next
+echo FCID is now 2
+
+
+####################################################################################################
+# Starting pipeline at Wed Sep 11 16:22:23 CEST 2013
+# Input files:  null
+# Output Log:  .bpipe/logs/32044.log
+# Stage prepare_sample
+echo FCID is now 
+# Stage next
+echo FCID is now 2
+
+
+####################################################################################################
+# Starting pipeline at Wed Sep 11 16:22:46 CEST 2013
+# Input files:  null
+# Output Log:  .bpipe/logs/32117.log
+# Stage prepare_sample
+echo FCID is now 
+
+####################################################################################################
+# Starting pipeline at Wed Sep 11 16:23:11 CEST 2013
+# Input files:  null
+# Output Log:  .bpipe/logs/32670.log
+# Stage prepare_sample
+echo FCID is now 
+# Stage next
+echo FCID is now $$SAMPLESHEET
+
+
+####################################################################################################
+# Starting pipeline at Wed Sep 11 16:23:29 CEST 2013
+# Input files:  null
+# Output Log:  .bpipe/logs/32733.log
+# Stage prepare_sample
+echo FCID is now 
+# Stage next
+echo FCID is now SampleSheet.csv
+
+
+####################################################################################################
+# Starting pipeline at Wed Sep 11 16:24:14 CEST 2013
+# Input files:  null
+# Output Log:  .bpipe/logs/356.log
+# Stage prepare_sample
+FCID=100
+# Stage next
+echo FCID is now 1
+
+
+####################################################################################################
+# Starting pipeline at Wed Sep 11 16:25:02 CEST 2013
+# Input files:  null
+# Output Log:  .bpipe/logs/437.log
+# Stage prepare_sample
+1=100
+
