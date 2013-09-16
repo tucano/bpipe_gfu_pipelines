@@ -62,13 +62,16 @@ echo "$SCRIPT_NAME: Scratch prefix is $SCRATCH_PREFIX" >&2
 
 FCID=`tail -1 $1 | cut -d',' -f1 `
 REFERENCE=`tail -1 $1 | cut -d',' -f4`
-NAME=`tail -1 $1 | cut -d',' -f3`
+PROJECTNAME=`tail -1 $1 | cut -d',' -f3`
 RINDEX=`tail -1 $1 | cut -d',' -f5`
 
-echo -e "$SCRIPT_NAME: collected info from $SAMPLE_SHEET --> fcid=$FCID, reference=$REFERENCE, experiment_name=$NAME, rindex=$RINDEX" >&2
+echo -e "$SCRIPT_NAME: collected info from $SAMPLE_SHEET --> fcid=$FCID, reference=$REFERENCE, experiment_name=$PROJECTNAME, rindex=$RINDEX" >&2
 
 # Global scratch dir for the project/experiment
-LOCAL_SCRATCH=$(/bin/mktemp -d ${SCRATCH_PREFIX}/${NAME}.XXXXXXXXXXXXX)
+LOCAL_SCRATCH=$(/bin/mktemp -d ${SCRATCH_PREFIX}/${PROJECTNAME}.XXXXXXXXXXXXX)
+
+echo -e "$SCRIPT_NAME: SCRATCH DIR: $LOCAL_SCRATCH" >&2
+
 # check for exit status mktemp
 if [[ $? != 0 ]]; then
 	echo "$SCRIPT_NAME: could not create scratch directory $LOCAL_SCRATCH"
@@ -92,7 +95,7 @@ REFERENCE_FAIDX=${REFERENCE_PREFIX}/$REFERENCE/fa/${REFERENCE}.fa.fai
 cat << EOF
 FCID=$FCID
 REFERENCE=$REFERENCE
-NAME=$NAME
+PROJECTNAME=$PROJECTNAME
 RINDEX=$RINDEX
 LOCAL_SCRATCH=$LOCAL_SCRATCH
 REFERENCE_GENOME=$REFERENCE_GENOME

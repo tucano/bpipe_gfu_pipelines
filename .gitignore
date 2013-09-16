@@ -3,3 +3,6 @@
 .bpipe/
 data/
 bpipe.config
+commandlog.txt
+gfu_environment.sh
+doc/index.html
