@@ -21,6 +21,9 @@ Author: davide.rambaldi AT gmail DOT com
 
 
 
+### TODO
+
+* a "which" script to find the path of all executables?
 
 ### DEVEL INFO
 

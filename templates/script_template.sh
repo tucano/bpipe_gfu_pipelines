@@ -1,8 +1,8 @@
 #!/bin/bash
 
-## DESCRIPTION: print some diag on current node
+## DESCRIPTION: 
 
-## AUTHOR: davide.rambaldi AT gmail.com
+## AUTHOR: $USER_FULLNAME
 
 declare -r SCRIPT_NAME=$(basename "$BASH_SOURCE" .sh)
 
@@ -39,25 +39,8 @@ while getopts ":h" opt; do
 done
 
 shift $(($OPTIND - 1))
-
-#[[ "$#" -lt 1 ]] && usage "Too few arguments\n"
+[[ "$#" -lt 1 ]] && usage "Too few arguments\n"
 
 #==========MAIN CODE BELOW==========
 
-cat << __EOF__
 
-PBS PRO INFO:
-
-qsub host is $PBS_O_HOST
-original queue is $PBS_O_QUEUE
-qsub working directory absolute is $PBS_O_WORKDIR
-pbs environment is $PBS_ENVIRONMENT
-pbs batch id $PBS_JOBID
-pbs job name from me is $PBS_JOBNAME
-Name of file containing nodes is $PBS_NODEFILE
-contents of nodefile is cat $PBS_NODEFILE
-Name of queue to which job went is $PBS_QUEUE
-
-__EOF__
-
-exit 0

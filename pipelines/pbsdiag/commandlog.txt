@@ -1,0 +1,23 @@
+
+####################################################################################################
+# Starting pipeline at Thu Sep 12 10:43:08 CEST 2013
+# Input files:  null
+# Output Log:  .bpipe/logs/31196.log
+# Stage pbs_env
+/home/drambaldi/bpipe_gfu_pipelines/bin/pbs_env.sh > pbs_env.txt
+
+
+####################################################################################################
+# Starting pipeline at Fri Sep 13 16:57:00 CEST 2013
+# Input files:  null
+# Output Log:  .bpipe/logs/19333.log
+# Stage pbs_env
+
+
+####################################################################################################
+# Starting pipeline at Fri Sep 13 16:57:10 CEST 2013
+# Input files:  null
+# Output Log:  .bpipe/logs/19396.log
+# Stage pbs_env
+/home/drambaldi/bpipe_gfu_pipelines/bin/pbs_env.sh > pbs_env.txt
+
