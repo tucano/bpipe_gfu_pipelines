@@ -13,9 +13,12 @@ bail() {
 } 
 
 ## help message
-declare -r HELP_MSG="Usage: $SCRIPT_NAME [OPTIONS] <WORKING DIRECTORY>
-  Remove the trash dir from the bpipe working directory. With option -a remove the .bpipe directory
+declare -r HELP_MSG="Usage: $SCRIPT_NAME [OPTIONS]
+  Remove the trash dir and .bpipe dir from the current working directory. 
   -a    remove the .bpipe directory (logs, commands, everything)
+  -c    remove also bpipe.config
+  -e    remove also gfu_environment.sh
+  -d    remove also the doc directory
   -p    test mode (pretend): only show what would be done. 
   -h    display this help and exit
 "
@@ -31,13 +34,22 @@ usage() {
 }
 
 # getopts function
-while getopts ":hpa" opt; do
+while getopts ":hpacde" opt; do
     case $opt in
         a) 
             ALL=true
             ;;
         p) 
             DRY_RUN=true
+            ;;
+        c) 
+            CONFIG=true
+            ;;
+        e)
+            GFUENV=true
+            ;;
+        d)
+            DOC=true
             ;;
         h)
             usage 0
@@ -49,17 +61,36 @@ while getopts ":hpa" opt; do
 done
 
 shift $(($OPTIND - 1))
-[[ "$#" -lt 1 ]] && usage "Too few arguments\n"
+#[[ "$#" -lt 1 ]] && usage "Too few arguments\n"
 
 #==========MAIN CODE BELOW==========
 if [[ ! -z $ALL ]]; then
-    MYDIR=$1/.bpipe
+    MYDIR=${PWD}/.bpipe
     echo "Removing bpipe dir $MYDIR" >&2
 else
-    MYDIR=$1/.bpipe/trash
+    MYDIR=${PWD}/.bpipe/trash
     echo "Removing bpipe trash dir $MYDIR" >&2
 fi
 
+CONFIG_FILE="${PWD}/bpipe.config"
+
+if [[ ! -z $CONFIG ]]; then
+    echo "Removing config files: $CONFIG_FILE" >&2
+    MYDIR="$MYDIR $CONFIG_FILE"
+fi
+
+GFUENV_FILE="${PWD}/gfu_environment.sh"
+
+if [[ ! -z $GFUENV ]]; then
+    echo "Removing config files: $GFUENV_FILE" >&2
+    MYDIR="$MYDIR $GFUENV_FILE"
+fi
+
+
+if [[ ! -z $DOC ]]; then
+    echo "Removing doc dir ./doc" >&2
+    MYDIR="$MYDIR ${PWD}/doc"
+fi
 
 if [[ ! -z $DRY_RUN ]]; then
     echo -e "PRETEND MODE:\n\trm -rf $MYDIR"
