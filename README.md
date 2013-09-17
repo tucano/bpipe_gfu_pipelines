@@ -38,6 +38,9 @@ __Pipeline file (groovy) must be in the data directory__
 ### TODO
 
 * a "which" script to find the path of all executables?
+* fastqc script
+* bam quality scripts
+* send mail to user on job complete
 
 ### DEVEL INFO
 

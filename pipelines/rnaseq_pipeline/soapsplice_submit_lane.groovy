@@ -19,16 +19,22 @@ GENOMES_PREFIX="/lustre1/genomes"
 SCRATCH_PREFIX="/lustre2/scratch"
 ENVIRONMENT_FILE="gfu_environment.sh"
 
-// SPECIFIC SCRIPTS (FIXME now in my home)
-GFU_PREPARE_LANE_SCRIPT = "/home/drambaldi/bpipe_gfu_pipelines/bin/prepare_lane.sh"
+// STAGES SCRIPTS
+GFU_PREPARE_LANE_SCRIPT  = "/home/drambaldi/bpipe_gfu_pipelines/bin/soapsplice_prepare_lane.sh"
+GFU_PREPARE_ALIGN_SCRIPT = "/home/drambaldi/bpipe_gfu_pipelines/bin/soapsplice_prepare_align.sh"
+GFU_VERIFY_BAM           = "/home/drambaldi/bpipe_gfu_pipelines/bin/verify_bam.sh"
 
+@intermediate
 prepare_lane_gfu_soapsplice = {
 	doc title: "Soapsplice RNA alignment preprocessing",
 		desc: "Extract from $SAMPLESHEET info about the experiment, create the LOCAL_SCRATCH directory, prepare the gfu_enviroment.sh file",
 		constraints: "search for a $SAMPLESHEET file in current working dir",
 		author: "davide.rambaldi@gmail.com"
-	exec "$GFU_PREPARE_LANE_SCRIPT $SAMPLESHEET $GENOMES_PREFIX $SCRATCH_PREFIX > $ENVIRONMENT_FILE"
+	produce("$ENVIRONMENT_FILE") {
+		exec "$GFU_PREPARE_LANE_SCRIPT $SAMPLESHEET $GENOMES_PREFIX $SCRATCH_PREFIX $SSPLICE > $ENVIRONMENT_FILE"
+	}
 }
+
 
 clean_scratch_gfu_soapsplice = {
 	doc title: "Soapsplice RNA alignment postprocessing cleanup",
@@ -49,44 +55,37 @@ align_gfu_soapsplice = {
 		author: "davide.rambaldi@gmail.com"
 	from("fastq.gz","fastq.gz") produce(input.prefix - ".fastq" +".bam") {
 		exec"""
-			source $ENVIRONMENT_FILE;			
-			TMP_SCRATCH=\$(/bin/mktemp -d /dev/shm/\${PROJECTNAME}.XXXXXXXXXXXXX);
+			HEADER_FILE=`$GFU_PREPARE_ALIGN_SCRIPT $ENVIRONMENT_FILE $input1`;
+			TMP_SCRATCH=`dirname $HEADER_FILE`
+			TMP_OUTPUT_PREFIX=$TMP_SCRATCH/$output.prefix;
+
+			source $ENVIRONMENT_FILE;
 			
-			LANE=`echo $input1 | rev | cut -d'_' -f 3 | rev`;
-			INDEX=`echo $input1 | rev| cut -d'_' -f 1 | rev`;
-			INDX=` echo $INDEX | cut -d'.' -f 1 `;
+			echo -e "[align_gfu_soapsplice]: align on node $HOSTNAME with command -->\\n\\t$SSPLICE -d $REFERENCE_GENOME -1 $input1 -2 $input2 -o $TMP_OUTPUT_PREFIX -p 4 $SSPLICEOPT_ALN" >&2;
+			$SSPLICE -d $REFERENCE_GENOME -1 $input1 -2 $input2 -o $TMP_OUTPUT_PREFIX -p 4 $SSPLICEOPT_ALN;
 
-			HEADER_FILE=\${TMP_SCRATCH}/\${PROJECTNAME}_\${RINDEX}_${LANE}_\${INDX}.header;
-		
-			SSVERSION=`$SSPLICE | head -n1 | awk '{print \$3}'`;
+			echo -e "[align_gfu_soapsplice]: creating BAM file from ${TMP_OUTPUT_PREFIX}.sam and header $HEADER_FILE with command-->\\n\\tcat $HEADER_FILE ${TMP_OUTPUT_PREFIX}.sam | $SAMTOOLS view -Su - | $SAMTOOLS sort - $TMP_OUTPUT_PREFIX" >&2;
+			cat $HEADER_FILE ${TMP_OUTPUT_PREFIX}.sam | $SAMTOOLS view -Su - | $SAMTOOLS sort - $TMP_OUTPUT_PREFIX
 
-			awk '{OFS="\\t"; print "@SQ","SN:"\$1,"LN:"\$2}' $REFERENCE_FAIDX > $HEADER_FILE;
-			echo -e "@RG\\tID:$PROJECTNAME"_"$LANE\\tPL:illumina\\tPU:$FCID\\tLB:$PROJECTNAME\\tSM:$PROJECTNAME\\tCN:CTGB" >> $HEADER_FILE;
-			echo -e "@PG\\tID:soapsplice\\tPN:soapsplice\\tVN:$SSVERSION" >> $HEADER_FILE
-			
-			echo -e "[align_gfu_soapsplice]: Temporary RAM directory on node is $TMP_SCRATCH" >&2;
-			echo -e "[align_gfu_soapsplice]: Project is $PROJECTNAME, Rindex is $RINDEX lane is $LANE, indx is $INDX" >&2;
-			echo -e "[align_gfu_soapsplice]: Soapsplice version $SSVERSION" >&2;
-			echo -e "[align_gfu_soapsplice]: Creating headers using $REFERENCE_FAIDX in file $HEADER_FILE" >&2;
+			echo -e "[align_gfu_soapsplice]: verifying bam file: ${TMP_OUTPUT_PREFIX}.bam with command -->\\n\\t$GFU_VERIFY_BAM ${TMP_OUTPUT_PREFIX}.bam";			
+			$GFU_VERIFY_BAM ${TMP_OUTPUT_PREFIX}.bam || exit 1;
 
-			TMP_OUTPUT=\${TMP_SCRATCH}/$output.prefix
+			echo -e "[align_gfu_soapsplice]: moving output bam ${TMP_OUTPUT_PREFIX}.bam to ${LOCAL_SCRATCH} with command -->\\n\\tmv ${TMP_OUTPUT_PREFIX}.bam ${LOCAL_SCRATCH}/" >&2;
+			mv ${TMP_OUTPUT_PREFIX}.bam ${LOCAL_SCRATCH}/
 
-			$SSPLICE -d $REFERENCE_GENOME -1 $input1 -2 $input2 -o \${TMP_OUTPUT} -p 4 $SSPLICEOPT_ALN
+			echo -e "[align_gfu_soapsplice]: moving junc files in $TMP_SCRATCH to $LOCAL_SCRATCH with command -->\\n\\tmv ${TMP_SCRATCH}/[*].junc ${LOCAL_SCRATCH}/" >&2;
+			mv ${TMP_SCRATCH}/[*].junc ${LOCAL_SCRATCH}/
 
-			BAM_TMP_OUTPUT=\${TMP_SCRATCH}/$output.prefix
+			echo -e "[align_gfu_soapsplice]: linking bam intermediate to bpipe working directory ($PWD) with command -->\\n\\tln ${LOCAL_SCRATCH}/$output.bam $output.bam" >&2;
+			ln -s ${LOCAL_SCRATCH}/$output.bam $output.bam
 
-			cat \${HEADER_FILE} \${TMP_OUTPUT} | $SAMTOOLS view -Su - | $SAMTOOLS sort - ${BAM_TMP_OUTPUT}
-
-			mv \${BAM_TMP_OUTPUT}.bam \${LOCAL_SCRATCH}
-			mv \${TMP_SCRATCH}*.junc \${LOCAL_SCRATCH}
-
-			echo -e "[align_gfu_soapsplice]: Removing $TMP_SCRATCH RAM directory in node $HOSTNAME" >&2;
-			rm -rf $TMP_SCRATCH;
+			echo -e "[align_gfu_soapsplice]: Removing $TMP_SCRATCH RAM directory from node $HOSTNAME with command -->\\n\\trm -rf ${TMP_SCRATCH}" >&2;
+			rm -rf ${TMP_SCRATCH}
 		"""
 	}
 }
 
-/* "
+/*
  * RUNNER 
  */
 Bpipe.run { 

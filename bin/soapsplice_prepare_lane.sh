@@ -15,7 +15,7 @@ bail() {
 } 
 
 ## help message
-declare -r HELP_MSG="Usage: $SCRIPT_NAME [OPTION]... <SampleSheet.csv> <reference_genomes_prefix_dir> <scratch_prefix_dir>
+declare -r HELP_MSG="Usage: $SCRIPT_NAME [OPTION]... <SampleSheet.csv> <reference_genomes_prefix_dir> <scratch_prefix_dir> <soapsplice_binary>
   -h    display this help and exit
 "
 
@@ -42,7 +42,7 @@ done
 
 shift $(($OPTIND - 1))
 
-[[ "$#" -lt 3 ]] && usage "Too few arguments\n"
+[[ "$#" -lt 4 ]] && usage "Too few arguments\n"
 
 #==========MAIN CODE BELOW==========
 
@@ -54,6 +54,7 @@ command -v /bin/mktemp >/dev/null 2>&1 || { echo >&2 "I require mktemp but it's 
 SAMPLE_SHEET=$1
 REFERENCE_PREFIX=$2
 SCRATCH_PREFIX=$3
+SSPLICE=$4
 
 echo "$SCRIPT_NAME: Current working dir is $PWD" >&2
 echo "$SCRIPT_NAME: Illumina Sample Sheet is $SAMPLE_SHEET" >&2
@@ -70,11 +71,11 @@ echo -e "$SCRIPT_NAME: collected info from $SAMPLE_SHEET --> fcid=$FCID, referen
 # Global scratch dir for the project/experiment
 LOCAL_SCRATCH=$(/bin/mktemp -d ${SCRATCH_PREFIX}/${PROJECTNAME}.XXXXXXXXXXXXX)
 
-echo -e "$SCRIPT_NAME: SCRATCH DIR: $LOCAL_SCRATCH" >&2
+echo -e "$SCRIPT_NAME: scratch directory: $LOCAL_SCRATCH" >&2
 
 # check for exit status mktemp
 if [[ $? != 0 ]]; then
-	echo "$SCRIPT_NAME: could not create scratch directory $LOCAL_SCRATCH"
+	echo "$SCRIPT_NAME: could not create scratch directory $LOCAL_SCRATCH" >&2
 fi
 
 # lustre filesystem settings for global scratch:
@@ -82,13 +83,16 @@ command -v /usr/bin/lfs >/dev/null 2>&1 || { echo >&2 "I require lfs but it's no
 /usr/bin/lfs setstripe -c -1 -i -1 -s 2M $LOCAL_SCRATCH
 # check for exit status lsf
 if [[ $? != 0 ]]; then
-	echo "$SCRIPT_NAME: could not set lustre options with:\nlsf setstip -c -1 -i -1 -s 2M\nin directory $LOCAL_SCRATCH"
+	echo "$SCRIPT_NAME: could not set lustre options with:\nlsf setstip -c -1 -i -1 -s 2M\nin directory $LOCAL_SCRATCH" >&2
 fi
 
 # Reference genome prefix
 REFERENCE_GENOME=${REFERENCE_PREFIX}/$REFERENCE/SOAPsplice/${REFERENCE}.index
 # Reference genome index (samtools faidx)
 REFERENCE_FAIDX=${REFERENCE_PREFIX}/$REFERENCE/fa/${REFERENCE}.fa.fai
+
+SSVERSION=`$SSPLICE | head -n1 | awk '{print \$3}'`;
+echo -e "$SCRIPT_NAME: soapsplice version = $SSVERSION" >&2
 
 # OUTPUT for ENVIRONMENT FILE FROM HERE
 #------------------------------------------------------------------------#
@@ -100,5 +104,8 @@ RINDEX=$RINDEX
 LOCAL_SCRATCH=$LOCAL_SCRATCH
 REFERENCE_GENOME=$REFERENCE_GENOME
 REFERENCE_FAIDX=$REFERENCE_FAIDX
+SSVERSION=$SSVERSION
 EOF
 #------------------------------------------------------------------------#
+
+exit 0
