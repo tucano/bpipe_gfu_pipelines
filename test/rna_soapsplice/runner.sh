@@ -3,6 +3,9 @@
 # OUTPUT
 OUTPUT="cbs1_r6_1395_B_GTGTTA_L007.merge.bam"
 
+# SCRIPT_NAME
+SCRIPT_NAME="test_rna_soapsplice"
+
 # 1. run cleaner
 ./cleaner.sh
 
@@ -19,5 +22,12 @@ bpipe run ../../pipelines/rnaseq_pipeline/soapsplice_submit_lane.groovy *.fastq.
 /usr/local/cluster/bin/samtools view -h $OUTPUT | diff - expected.sam > /dev/null 2>&1
 
 RESULT=$?
+
+if [ $? == 0 ]
+then
+	echo "$SCRIPT_NAME: SUCCESS"
+else
+	echo "$SCRIPT_NAME: FAIL"
+fi
 
 exit $RESULT
