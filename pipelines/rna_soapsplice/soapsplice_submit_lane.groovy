@@ -1,6 +1,5 @@
 // BPIPE PIPELINE to compute all alignment in a dir with soapsplice
-about title: "RNA alignment pipeline with soapsplice: IOS GFU 009.",
-	  desc: "Pipeline description"
+about title: "RNA alignment pipeline with soapsplice: IOS GFU 009."
 
 // Usage: bpipe run -r soapsplice_submit_lane.groovy *.fastq.gz
 
