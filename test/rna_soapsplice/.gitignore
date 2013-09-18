@@ -1,0 +1,7 @@
+*.bam
+*.bai
+*.log
+*.txt
+*.junc
+gfu_environment.sh
+
