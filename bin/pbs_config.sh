@@ -124,6 +124,9 @@ commands {
     merge_bam_files {
         select_statement="select=1:ncpus=8:mem=48g" 
     }
+    htseq_count {
+        select_statement="select=1:ncpus=10:mem=48g"   
+    }
 }
 
 EOF
