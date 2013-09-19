@@ -21,13 +21,13 @@ Author: davide.rambaldi AT gmail DOT com
 
 ### USAGE	
 
+* da fare ...
 
-#### PIPELINES STAGES
+#### PIPELINES
 
-* __prepare_lane_gfu_soapsplice__ : prepare lane for soapsplice alignment
-* __clean_scratch_gfu_soapsplice__ : clean scratch dirs after soapsplice alignment
-* __align_gfu_soapsplice__ : align with soapsplice
+* __RNA__
 
+* __DNA__
 
 #### SCRIPTS
 
@@ -47,7 +47,7 @@ Author: davide.rambaldi AT gmail DOT com
 * send mail to user on job complete: see [NOTIFICATION](https://code.google.com/p/bpipe/wiki/Notifications)
 * Sopasplice submit single file
 
-### DEVEL INFO
+### DEVELOPMENT INFO
 
 #### PBS pro directives: 
 * http://portal.ivec.org/docs/Supercomputers/PBS_Pro
