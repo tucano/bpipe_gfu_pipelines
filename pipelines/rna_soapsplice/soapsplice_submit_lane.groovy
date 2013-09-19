@@ -1,7 +1,7 @@
 // BPIPE PIPELINE to compute all alignment in a dir with soapsplice
-about title: "RNA alignment pipeline with soapsplice: IOS GFU 009."
+about title: "RNA lane alignment pipeline with soapsplice: IOS GFU 009."
 
-// Usage: bpipe run -r soapsplice_submit_lane.groovy *.fastq.gz
+// USAGE: bpipe run <pipeline.groovy> *.fastq.gz
 
 // SOFTWARES PATHS AND OPTIONS
 SSPLICE="/lustre1/tools/bin/soapsplice"
@@ -17,7 +17,7 @@ GFU_PREPARE_ALIGN_SCRIPT = "/home/drambaldi/bpipe_gfu_pipelines/bin/soapsplice_p
 GFU_VERIFY_BAM           = "/home/drambaldi/bpipe_gfu_pipelines/bin/verify_bam.sh"
 
 @Transform("bam")
-align_gfu_soapsplice = 
+align_soapsplice_gfu = 
 {
 	doc title: "Soapsplice alignment task",
 		desc: "Align with soapsplice. Generate temporary files in /dev/shm on the node",
@@ -104,5 +104,5 @@ bam_flagstat_gfu =
  */
 Bpipe.run 
 { 
-	"_R*_%.fastq.gz" * [align_gfu_soapsplice] + merge_bam_gfu + bam_flagstat_gfu
+	"_R*_%.fastq.gz" * [align_soapsplice_gfu] + merge_bam_gfu + bam_flagstat_gfu
 }
