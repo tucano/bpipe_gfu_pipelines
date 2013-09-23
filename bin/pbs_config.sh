@@ -127,6 +127,12 @@ commands {
     htseq_count {
         select_statement="select=1:ncpus=10:mem=48g"   
     }
+    bwa_aln {
+        select_statement="select=1:ncpus=2:mem=16g"
+    }
+    bwa_sampe {
+        select_statement="select=1:ncpus=2:mem=24g"   
+    }
 }
 
 EOF
