@@ -7,9 +7,7 @@ about title: "RNA lane alignment pipeline with soapsplice: IOS GFU 009."
 SSPLICE="/lustre1/tools/bin/soapsplice"
 SAMTOOLS="/usr/local/cluster/bin/samtools"
 SSPLICEOPT_ALN="-f 2 -q 1 -j 0"
-PICMERGE="/usr/local/cluster/bin/MergeSamFiles.jar"
 
-// File Paths
 ENVIRONMENT_FILE="gfu_environment.sh"
 
 // STAGES SCRIPTS
@@ -31,7 +29,7 @@ align_soapsplice_gfu =
 
 			source $ENVIRONMENT_FILE;
 			
-			echo -e "[align_gfu_soapsplice]: soapsplice alignment on node $HOSTNAME" >&2;
+			echo -e "[align_soapsplice_gfu]: soapsplice alignment on node $HOSTNAME" >&2;
 
 			$SSPLICE -d $REFERENCE_GENOME -1 $input1.gz -2 $input2.gz -o $TMP_OUTPUT_PREFIX -p 4 $SSPLICEOPT_ALN;
 
@@ -85,18 +83,6 @@ merge_bam_gfu =
 			done;
 		""","merge_bam_files"
 	}
-}
-
-@Transform("log")
-bam_flagstat_gfu =
-{
-	doc title: "GFU falgstat on BAM file",
-		desc: "Launch $SAMTOOLS flagstat on the final (merged) bam file, produce a log file $output",
-		author: "davide.rambaldi@gmail.com"
-	exec """
-		echo -e "[bam_flagstat_gfu]: flagstat on output file $output" >&2;
-		$SAMTOOLS flagstat $input > $output;
-	"""
 }
 
 /*
