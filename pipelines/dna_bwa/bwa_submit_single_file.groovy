@@ -11,7 +11,7 @@ GFU_SPLIT_FASTQ  = "/home/drambaldi/bpipe_gfu_pipelines/bin/split_fastq.sh"
 GFU_VERIFY_BAM   = "/home/drambaldi/bpipe_gfu_pipelines/bin/verify_bam.sh"
 ENVIRONMENT_FILE = "gfu_environment.sh"
 
-SPLIT_READS_SIZE = 10000
+SPLIT_READS_SIZE = 2000000
 
 split_fastq_pairs_gfu =
 {
