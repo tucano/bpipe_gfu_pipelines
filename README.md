@@ -21,6 +21,10 @@ Author: davide.rambaldi AT gmail DOT com
 
 ### USAGE	
 
+* Configure ulimits to avoid _java.lang.OutOfMemoryError: unable to create new native thread_ adding to .profile
+	
+	`ulimit -u 4096`
+
 * da fare ...
 
 #### PIPELINES
