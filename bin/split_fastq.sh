@@ -40,10 +40,10 @@ while getopts "1:2:r:h" opt; do
             usage 0
             ;;
         1)
-            FR1=$(cd $(dirname $OPTARG); pwd)/$(basename $OPTARG) 
+            FILE1=$(cd $(dirname $OPTARG); pwd)/$(basename $OPTARG) 
             ;;
         2)
-            FR2=$(cd $(dirname $OPTARG); pwd)/$(basename $OPTARG) 
+            FILE2=$(cd $(dirname $OPTARG); pwd)/$(basename $OPTARG) 
             pairedEnd=true
             ;;
         r)
@@ -59,6 +59,7 @@ shift $(($OPTIND - 1))
 [[ "$#" -lt 1 ]] && usage "Too few arguments\n"
 
 #==========MAIN CODE BELOW==========
+command -v /bin/readlink >/dev/null 2>&1 || { echo >&2 "I require readlink but it's not installed.  Aborting."; exit 1; }
 
 # in fastq each 4 lines is a read, then
 n_lines=$((n_reads * 4))
@@ -70,9 +71,22 @@ WDIR=$PWD
 
 cd $LOCAL_SCRATCH
 
+# follow soft links and convert to original file
+if [[ -h $FILE1 ]]; then 
+    FR1=$(readlink $FILE1)
+else
+    FR1=$FILE1
+fi
+
+if [[ -h $FILE2 ]]; then 
+    FR2=$(readlink $FILE2)
+else
+    FR2=$FILE2
+fi
+
 # check if I can open $FR1 and split with mass rename
 if [[ ! -f $FR1 ]]; then 
-    echo -e "Can't open reads file: $FR1" >&2
+    echo -e "FILE 1: Can't open reads file: $FR1" >&2
     exit 1;
 else
     echo -e "Splitting $FR1 in $n_reads reads ($n_lines lines)" >&2
@@ -90,7 +104,7 @@ fi
 # chceck if I can open $FR2 and split
 if [[ $pairedEnd == 'true' ]]; then
     if [[ ! -f $FR2 ]]; then
-        echo -e "Can't open reads file: $FR1" >&2
+        echo -e "FILE 2: Can't open reads file: $FR2" >&2
         exit 1;
     else
         echo -e "Splitting $FR2 in $n_reads reads ($n_lines lines)" >&2
