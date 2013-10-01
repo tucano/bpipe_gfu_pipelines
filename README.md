@@ -6,9 +6,9 @@ Author: davide.rambaldi AT gmail DOT com
 ### Wiki Documentation
 
 * [WIKI HOME](bpipe_gfu_pipelines/wiki/Home)
-** [USER HELP](bpipe_gfu_pipelines/wiki/UserHelp)
-** [DEVELOPERS HELP](bpipe_gfu_pipelines/wiki/DeveloperHelp)
-** [TODO](bpipe_gfu_pipelines/wiki/Todo)
+ * [USER HELP](bpipe_gfu_pipelines/wiki/UserHelp)
+ * [DEVELOPERS HELP](bpipe_gfu_pipelines/wiki/DeveloperHelp)
+ * [TODO](bpipe_gfu_pipelines/wiki/Todo)
 
 ### DIRECTORY STRUCTURE
 
