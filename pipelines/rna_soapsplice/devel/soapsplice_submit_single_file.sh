@@ -228,7 +228,7 @@ echo -e "@PG\tID:soapsplice\tPN:soapsplice\tVN:\${sversion[2]}" >> \${TMP_SCRATC
 $SSPLICE -d $ref_genome -1 $R1 -o \${TMP_SCRATCH}/${R_final} -p 4 ${SSPLICEOPT_ALN}
 
 cd \$TMP_SCRATCH
-$SAMTOOLS view -Su \$TMP_SCRATCH/${R_final}.sam | $SAMTOOLS sort - $R_final
+cat \${TMP_SCRATCH}/header.$R_final \$TMP_SCRATCH/${R_final}.sam | $SAMTOOLS view -Su - | $SAMTOOLS sort - $R_final
 mv ${R_final}.bam ${LOCAL_SCRATCH}
 mv \$TMP_SCRATCH/*.junc ${LOCAL_SCRATCH}
 rm \$TMP_SCRATCH/${R_final}.sam 

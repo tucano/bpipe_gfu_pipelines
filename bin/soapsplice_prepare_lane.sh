@@ -15,7 +15,7 @@ bail() {
 } 
 
 ## help message
-declare -r HELP_MSG="Usage: $SCRIPT_NAME [OPTION]... <SampleSheet.csv> <reference_genomes_prefix_dir> <scratch_prefix_dir> <soapsplice_binary>
+declare -r HELP_MSG="Usage: $SCRIPT_NAME [OPTION]... <SampleSheet.csv> <reference_genomes_prefix_dir> <scratch_prefix_dir> <soapsplice path>
   -h    display this help and exit
 "
 
