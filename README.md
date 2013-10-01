@@ -18,6 +18,18 @@ Author: davide.rambaldi AT gmail DOT com
 
 * __.bpipeconfig__ global configuration file for the executor (place in $HOME)
 
+### CURRENT CRITICAL CHECKS TO DO ON NODES
+
+* check for space in /dev/shm
+* check for mounting in the node! Noticed that node b003 lost /illumina/ mount 
+
+
+
+
+
+### BUGS
+
+* BWA options -I for base64 Illumina quality!!!
 
 ### USAGE	
 
