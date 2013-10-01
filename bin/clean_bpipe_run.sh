@@ -15,7 +15,7 @@ bail() {
 ## help message
 declare -r HELP_MSG="Usage: $SCRIPT_NAME [OPTIONS]
   Remove the trash dir and .bpipe dir from the current working directory. 
-  -a    remove the .bpipe directory (logs, commands, everything)
+  -a    remove the .bpipe directory (logs, commands, everything) and commandlog.txt
   -c    remove also bpipe.config
   -e    remove also gfu_environment.sh
   -d    remove also the doc directory
@@ -65,7 +65,7 @@ shift $(($OPTIND - 1))
 
 #==========MAIN CODE BELOW==========
 if [[ ! -z $ALL ]]; then
-    MYDIR=${PWD}/.bpipe
+    MYDIR="${PWD}/.bpipe commandlog.txt"
     echo "Removing bpipe dir $MYDIR" >&2
 else
     MYDIR=${PWD}/.bpipe/trash

@@ -4,7 +4,7 @@
 bpipe cleanup -y
 
 # 1. clean output and logs
-rm -f *_reads_count.txt *.sam *.sorted.bam commandlog.txt run.log run.err
+rm -f *.junc *merge* *.bam commandlog.txt run.log run.err
 
 # 2. clean previous run
 ../../bin/clean_bpipe_run.sh -aced

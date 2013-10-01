@@ -1,6 +1,6 @@
 #!/bin/bash
 
-## DESCRIPTION: bwa prepare single files for alignment
+## DESCRIPTION: soapsplice prepare single files for alignment
 
 ## AUTHOR: davide.rambaldi@gmail.com
 
@@ -24,7 +24,7 @@ bail() {
 
 ## help message
 declare -r HELP_MSG="Usage: $SCRIPT_NAME [OPTION]... <reference_genomes_prefix_dir> <scratch_prefix_dir> <soapsplice path>
-  -n name  name of the experiment
+  -h    display this help and exit
   -g ref   reference genome
   -I id    sample id
   -P name  Platform [$PL]
@@ -51,29 +51,29 @@ while getopts "hn:g:I:P:U:L:S:C:" opt; do
             usage 0
             ;;
         n)
-			      name=$OPTARG
-			      ;;
-    		g)
-    			  reference=$OPTARG
-    			  ;;
-    		I)
-    		    ID=$OPTARG
-    			   ;;
-    		P)
-    			  PL=$OPTARG
-    			  ;;
-    		U)
-    			  PU=$OPTARG
-    			  ;;
-    		L)
-    			  LB=$OPTARG
-    			  ;;
-    		S)
-    			  SM=$OPTARG
-    			  ;;
-    		C)
-    			  CN=$OPTARG
-    			  ;;
+            name=$OPTARG
+            ;;
+        g)
+            reference=$OPTARG
+            ;;
+        I)
+            ID=$OPTARG
+            ;;
+        P)
+            PL=$OPTARG
+            ;;
+        U)
+            PU=$OPTARG
+            ;;
+        L)
+            LB=$OPTARG
+            ;;
+        S)
+            SM=$OPTARG
+            ;;
+        C)
+            CN=$OPTARG
+            ;;
         \?)
             usage "Invalid option: -$OPTARG \n"
             ;;
@@ -81,7 +81,7 @@ while getopts "hn:g:I:P:U:L:S:C:" opt; do
 done
 
 shift $(($OPTIND - 1))
-[[ "$#" -lt 2 ]] && usage "Too few arguments\n"
+[[ "$#" -lt 1 ]] && usage "Too few arguments\n"
 
 #==========MAIN CODE BELOW==========
 
@@ -92,14 +92,40 @@ command -v /bin/mktemp >/dev/null 2>&1 || { echo >&2 "I require mktemp but it's 
 
 REFERENCE_PREFIX=$1
 SCRATCH_PREFIX=$2
+SSPLICE=$3
+
+echo "$SCRIPT_NAME: Current working dir is $PWD" >&2
+echo "$SCRIPT_NAME: Reference genomes prefix is $REFERENCE_PREFIX" >&2
+echo "$SCRIPT_NAME: Scratch prefix is $SCRATCH_PREFIX" >&2
 
 REFERENCE_GENOME=$1/$reference/bwa/$reference
 LOCAL_SCRATCH=$(/bin/mktemp -d ${SCRATCH_PREFIX}/${name}.XXXXXXXXXXXXX)
+
+echo -e "$SCRIPT_NAME: scratch directory: $LOCAL_SCRATCH" >&2
+
+# check for exit status mktemp
+if [[ $? != 0 ]]; then
+    echo "$SCRIPT_NAME: could not create scratch directory $LOCAL_SCRATCH" >&2
+fi
+
+# lustre filesystem settings for global scratch:
+command -v /usr/bin/lfs >/dev/null 2>&1 || { echo >&2 "I require lfs but it's not installed.  Aborting."; exit 1; }
+/usr/bin/lfs setstripe -c -1 -i -1 -s 2M $LOCAL_SCRATCH
+
+# Reference genome prefix
+REFERENCE_GENOME=${REFERENCE_PREFIX}/$reference/SOAPsplice/${reference}.index
+# Reference genome index (samtools faidx)
+REFERENCE_FAIDX=${REFERENCE_PREFIX}/$reference/fa/${reference}.fa.fai
+
+SSVERSION=`$SSPLICE | head -n1 | awk '{print \$3}'`;
+echo -e "$SCRIPT_NAME: soapsplice version = $SSVERSION" >&2
 
 # OUTPUT for ENVIRONMENT FILE FROM HERE
 #------------------------------------------------------------------------#
 cat << EOF
 REFERENCE_GENOME=$REFERENCE_GENOME
+REFERENCE_FAIDX=$REFERENCE_FAIDX
+SSVERSION=$SSVERSION
 REFERENCE=$reference
 PROJECTNAME=$name
 LOCAL_SCRATCH=$LOCAL_SCRATCH
