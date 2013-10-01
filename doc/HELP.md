@@ -1,5 +1,0 @@
-# USER GUIDE
-
-### PIPELINES
-
-
