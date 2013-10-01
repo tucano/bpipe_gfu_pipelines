@@ -78,14 +78,17 @@ fi
 # parse project name according to specs
 PROJECTNAME=`echo $PROJECTNAME | sed -e 's/[]\/()$*.^|<>;:"+,?[]/_/g'`
 
-# parse email
-if [[ ! -z $EMAIL ]]; then
+# parse email if necessary, verify presence of mailer.sh
+SCRIPT_DIR=$(cd $(dirname "$0"); pwd) 
+CONFIG_MAILER="${SCRIPT_DIR}/../config/mailer.sh"
+if [[ ! -z $EMAIL && -f $CONFIG_MAILER ]]; then
+    source $CONFIG_MAILER
     email_user=$(echo -e "notifications {
     gmail { 
         to=\"$EMAIL\"
-        username=\"bpipe.notify@gmail.com\"
-        password=\"bp1p3n0tify\"
-        events=\"FINISHED\" // receive notifications as each stage completes
+        username=\"$MAILER_USERNAME\"
+        password=\"$MAILER_PASSWORD\"
+        events=\"FINISHED\" // receive notification when pipeline finished
     }
 }")
 fi
