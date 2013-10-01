@@ -2,7 +2,10 @@
 about title: "DNA lane alignment with bwa (single files): IOS GFU 009"
 
 BWA="/usr/local/cluster/bin/bwa"
-BWAOPT_ALN=""
+
+// Uncomment this line (option -I) for base 64 Illumina quality
+// BWAOPT_ALN="-I"
+
 BWAOPT_PE=""
 BWAOPT_SE=""
 
@@ -22,6 +25,7 @@ split_fastq_pairs_gfu =
 	produce("*.fastq")
 	{
 		exec """
+			echo -e "[split_fastq_pairs_gfu]: splitting fastq on node $HOSTNAME" >&2;
 			$GFU_SPLIT_FASTQ -1 $input1 -2 $input2 -r $SPLIT_READS_SIZE $ENVIRONMENT_FILE
 		"""
 	}
@@ -49,6 +53,7 @@ align_bwa_gfu =
 		author: "davide.rambaldi@gmail.com"
 	exec """
 		source $ENVIRONMENT_FILE;
+		echo -e "[align_bwa_gfu]: bwa aln on node $HOSTNAME with input $input" >&2;
 		$BWA aln -t 2 $BWAOPT_ALN $REFERENCE_GENOME $input > $LOCAL_SCRATCH/$output;
 		ln -s ${LOCAL_SCRATCH}/$output $output;
 	""","bwa_aln"
@@ -68,7 +73,7 @@ sampe_bwa_gfu =
 		source $ENVIRONMENT_FILE;
 		TMP_SCRATCH=\$(/bin/mktemp -d /dev/shm/${PROJECTNAME}.XXXXXXXXXXXXX);
 		TMP_OUTPUT_PREFIX=$TMP_SCRATCH/$output.prefix;
-		echo -e "[sampe_bwa_gfu]: soapsplice alignment on node $HOSTNAME with TMP_SCRATCH: $TMP_SCRATCH" >&2;
+		echo -e "[sampe_bwa_gfu]: bwa sampe on node $HOSTNAME with TMP_SCRATCH: $TMP_SCRATCH" >&2;
 		$BWA sampe $BWAOPT_PE -r "@RG\tID:${ID}\tPL:${PL}\tPU:${PU}\tLB:${LB}\tSM:${SM}\tCN:${CN}" $REFERENCE_GENOME ${LOCAL_SCRATCH}/$input1.sai ${LOCAL_SCRATCH}/$input2.sai $input1_fastq $input2_fastq > ${TMP_OUTPUT_PREFIX}.sam;
 		$SAMTOOLS view -Su ${TMP_OUTPUT_PREFIX}.sam | $SAMTOOLS sort - ${TMP_OUTPUT_PREFIX};
 		$GFU_VERIFY_BAM ${TMP_OUTPUT_PREFIX}.bam || exit 1;
