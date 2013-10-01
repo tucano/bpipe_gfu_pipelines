@@ -46,7 +46,7 @@ htseq_count_gfu =
 	{
 		exec """
 			$SAMTOOLS view $input.bam | $HTSEQ_COUNT -m union -s no -o $output.sam - $input.gtf > $output.txt;
-			test \$(awk '{sum += \$2} END {print sum}' cbs1_r6_1395_B_GTGTTA_L007_reads_count.txt) -gt 0 || exit 1;
+			test \$(awk '{sum += \$2} END {print sum}' $output.txt) -gt 0 || exit 1;
 		""", "htseq_count"
 	}
 }
