@@ -6,3 +6,4 @@ bpipe.config
 commandlog.txt
 gfu_environment.sh
 doc/index.html
+config/mailer.sh
