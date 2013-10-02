@@ -54,8 +54,5 @@ sampe_bwa_gfu =
 Bpipe.run 
 {
 	// RUNNER FOR PAIRS R1 - R2 (bpipe run pipe.groovy *R*.gz)
-	"%_R*" * [split_fastq_pairs_gfu] + "%.fastq" * [align_bwa_gfu] + "read*_%.sai" * [sampe_bwa_gfu] + merge_bam_gfu + bam_flagstat_gfu
-
-	// RUNNER FOR SINGLE FILE TODO FIXME
-	// split_fastq_single_gfu
+	"%_R*" * [split_fastq_gfu(SPLIT_READS_SIZE: 2000000, paired: true)] + "%.fastq" * [align_bwa_gfu] + "read*_%.sai" * [sampe_bwa_gfu] + merge_bam_gfu + bam_flagstat_gfu
 }
