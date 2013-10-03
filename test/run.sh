@@ -10,9 +10,10 @@ do
 	RESULT=$?
 	if [ $RESULT == 0 ]; then
 		echo "--> SUCCEEDED";
+		./cleaner.sh 1>/dev/null 2>&1
 	else
 		echo "--> FAILED";
+		echo "--> I keep intermediate files to DEBUG this test";
 	fi
-	./cleaner.sh 1>/dev/null 2>&1
 	cd ..
 done

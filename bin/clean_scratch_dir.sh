@@ -42,6 +42,12 @@ shift $(($OPTIND - 1))
 [[ "$#" -lt 1 ]] && usage "Too few arguments\n"
 
 #==========MAIN CODE BELOW==========
+
+# exit if gfu_environment.sh doesn't exists
+if [[ ! -f $1 ]]; 
+    then exit 1; 
+fi
+
 source $1
 
 for F in $PWD/*.bam; do

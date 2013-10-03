@@ -11,5 +11,7 @@ ENVIRONMENT_FILE="gfu_environment.sh"
  */
 Bpipe.run 
 {
-    "*" * [split_fastq_gfu.using(SPLIT_READS_SIZE: 2000000, paired: false)] + "_%.fastq" * [align_soapsplice_gfu.using(paired: false)] + merge_bam_gfu + bam_flagstat_gfu
+    "*" * [split_fastq_gfu.using(SPLIT_READS_SIZE: 2000000, paired: false)] +
+    "_%.fastq" * [align_soapsplice_gfu.using(paired: false)] +
+    merge_bam_gfu + bam_flagstat_gfu
 }

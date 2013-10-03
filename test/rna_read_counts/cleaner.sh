@@ -2,6 +2,7 @@
 
 # 0. clean
 bpipe cleanup -y
+../../bin/clean_scratch_dir.sh gfu_environment.sh
 
 # 1. clean output and logs
 rm -f *_reads_count.txt *.sam *.sorted.bam commandlog.txt run.log run.err
