@@ -8,7 +8,8 @@ bam_flagstat_gfu =
 		desc: "Launch $SAMTOOLS flagstat on the final (merged) bam file, produce a log file $output",
 		author: "davide.rambaldi@gmail.com"
 	exec """
-		echo -e "[bam_flagstat_gfu]: flagstat on output file $output" >&2;
-		$SAMTOOLS flagstat $input > $output;
+		echo -e "[bam_flagstat_gfu]: flagstat with input $input.bam and output file $output" >&2;
+		$SAMTOOLS flagstat $input.bam > $output;
 	"""
+    forward input
 }

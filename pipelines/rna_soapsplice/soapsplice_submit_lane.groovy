@@ -6,9 +6,7 @@ about title: "RNA lane alignment pipeline with soapsplice: IOS GFU 009."
 // ENVIRONMENT FILE
 ENVIRONMENT_FILE="gfu_environment.sh"
 
-/*
- * RUNNER 
- */
+// SUBMIT LANE
 Bpipe.run 
 { 
 	"_R*_%.fastq.gz" * [align_soapsplice_gfu] + merge_bam_gfu + bam_flagstat_gfu

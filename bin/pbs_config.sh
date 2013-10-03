@@ -127,6 +127,9 @@ commands {
     merge_bam_files {
         select_statement="select=1:ncpus=8:mem=48g" 
     }
+    mark_duplicates {
+        select_statement="select=1:ncpus=4:mem=32g" 
+    }
     htseq_count {
         select_statement="select=1:ncpus=10:mem=48g"   
     }
@@ -135,6 +138,9 @@ commands {
     }
     bwa_sampe {
         select_statement="select=1:ncpus=2:mem=24g"   
+    }
+    gatk {
+        select_statement="select=1:ncpus=4:mem=32g"   
     }
 }
 
