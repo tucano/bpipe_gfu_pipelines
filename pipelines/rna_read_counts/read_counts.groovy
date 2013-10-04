@@ -11,5 +11,5 @@ SCRATCH_PREFIX="/lustre2/scratch"
  */
 Bpipe.run 
 { 
-	sort_bam_gfu + htseq_count_gfu
+	sort_bam_by_name_gfu + htseq_count_gfu
 }
