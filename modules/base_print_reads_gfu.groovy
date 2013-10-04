@@ -40,6 +40,6 @@ base_print_reads_gfu = {
               -L $truseq
               -nct 64
               -BQSR $input.grp
-      """
+      ""","gatk"
     }
 }

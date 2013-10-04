@@ -44,7 +44,7 @@ realiagner_target_creator_gfu = {
               -o $output.intervals
               --unsafe ALLOW_SEQ_DICT_INCOMPATIBILITY
               --known $dbsnp;
-      """
+      ""","gatk"
     }
     forward input
 }
