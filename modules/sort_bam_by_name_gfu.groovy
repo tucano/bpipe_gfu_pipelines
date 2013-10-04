@@ -1,4 +1,4 @@
-// MODULE SORT BAM FILE GFU
+// MODULE SORT BAM BY NAME FILE GFU
 SAMTOOLS="/usr/local/cluster/bin/samtools"
 // STAGES SCRIPTS
 GFU_PREPARE_SCRATCH_SCRIPT = "/home/drambaldi/bpipe_gfu_pipelines/bin/get_project_name_from_bam.sh"
@@ -11,9 +11,9 @@ GFU_PREPARE_SCRATCH_SCRIPT = "/home/drambaldi/bpipe_gfu_pipelines/bin/get_projec
 // 
 
 @Filter("sorted")
-sort_bam_gfu =
+sort_bam_by_name_gfu =
 {
-    doc title: "htseq-count prepare bam file",
+    doc title: "samtools prepare bam file for htseq-count: sort by name",
         desc: "If needed, run a script that search for LOCAL_SCRATCH and create tmp dir; then sort bam file",
         author: "davide.rambaldi@gmail.com"
     // conditional on presence of ENVIRONMENT_FILE
