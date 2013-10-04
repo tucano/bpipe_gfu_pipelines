@@ -1,6 +1,6 @@
 #!/bin/bash
 
-## DESCRIPTION: prepare for htseq-count
+## DESCRIPTION: prepare for htseq-count TO REMOVE
 ## input: final BAM from soapsplice
 ## NOTE: 
 
