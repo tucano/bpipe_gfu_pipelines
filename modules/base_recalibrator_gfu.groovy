@@ -51,7 +51,7 @@ base_recalibrator_gfu = {
               --unsafe ALLOW_SEQ_DICT_INCOMPATIBILITY
               -nct 64
               -o $output.grp
-      """
+      ""","gatk"
     }
     forward input.bam
 }

@@ -43,6 +43,6 @@ indel_realigner_gfu = {
               -o $output.bam
               --unsafe ALLOW_SEQ_DICT_INCOMPATIBILITY
               -known $dbsnp;
-      """
+      ""","gatk"
     }
 }

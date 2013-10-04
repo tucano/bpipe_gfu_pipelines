@@ -3,6 +3,13 @@ SAMTOOLS="/usr/local/cluster/bin/samtools"
 // STAGES SCRIPTS
 GFU_PREPARE_SCRATCH_SCRIPT = "/home/drambaldi/bpipe_gfu_pipelines/bin/get_project_name_from_bam.sh"
 
+//
+// FIXME sort_bam_by_name_gfu
+// SAM reads diviene l'output finale after: SORTING BY COORDINATES and TO BAM and INDEX (bai)
+// Link symbolici *.bam.bai e *.bai
+// MARKDUPLICATES --> Anche per RNA-seq (tutte le pipelines)
+// 
+
 @Filter("sorted")
 sort_bam_gfu =
 {
