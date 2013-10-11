@@ -1,12 +1,6 @@
 // MODULE SORT BAM BY NAME FILE GFU
 SAMTOOLS="/usr/local/cluster/bin/samtools"
 
-// FIXME/TODO
-// SAM reads diviene l'output finale after: SORTING BY COORDINATES and TO BAM and INDEX (bai)
-// Link symbolici *.bam.bai e *.bai
-// MARKDUPLICATES --> Anche per RNA-seq (tutte le pipelines)
-// 
-
 @Filter("sorted")
 sort_bam_by_name_gfu =
 {

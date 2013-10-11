@@ -15,5 +15,5 @@ Bpipe.run
 	"%_R*" * [split_fastq_gfu.using(SPLIT_READS_SIZE: 2000000, paired: true)] + 
 	"%.fastq" * [align_bwa_gfu.using(BWAOPT_ALN: "")] + 
 	"read*_%.sai" * [sampe_bwa_gfu.using(BWAOPT_PE: "", paired: true, lane:false, compressed : false)] + 
-	merge_bam_gfu + bam_flagstat_gfu
+	merge_bam_gfu + mark_duplicates_gfu + bam_flagstat_gfu
 }
