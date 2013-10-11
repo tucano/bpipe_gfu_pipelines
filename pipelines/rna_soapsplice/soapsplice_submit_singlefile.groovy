@@ -5,6 +5,7 @@ about title: "RNA single file (R1) alignment pipeline with soapsplice: IOS GFU 0
 
 // ENVIRONMENT
 ENVIRONMENT_FILE="gfu_environment.sh"
+SCRATCH_PREFIX="/lustre2/scratch"
 
 /*
  * RUNNER 
@@ -13,5 +14,5 @@ Bpipe.run
 {
     "*" * [split_fastq_gfu.using(SPLIT_READS_SIZE: 2000000, paired: false)] +
     "_%.fastq" * [align_soapsplice_gfu.using(paired: false)] +
-    merge_bam_gfu + bam_flagstat_gfu
+    merge_bam_gfu + mark_duplicates_gfu + bam_flagstat_gfu
 }

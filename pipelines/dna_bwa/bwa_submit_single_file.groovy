@@ -16,5 +16,5 @@ ENVIRONMENT_FILE="gfu_environment.sh"
     "*" * [split_fastq_gfu.using(SPLIT_READS_SIZE: 2000000, paired: false)] +
     "_%.fastq" * [align_bwa_gfu.using(BWAOPT_ALN: "")] +
     "_%.sai" * [sampe_bwa_gfu.using(BWAOPT_SE: "", paired: false, lane: false, compressed : true)] +
-    merge_bam_gfu + bam_flagstat_gfu
+    merge_bam_gfu + mark_duplicates_gfu + bam_flagstat_gfu
  }

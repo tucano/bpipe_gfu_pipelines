@@ -5,11 +5,10 @@ about title: "RNA single pair (R1-R2) alignment pipeline with soapsplice: IOS GF
 
 // ENVIRONMENT
 ENVIRONMENT_FILE="gfu_environment.sh"
+SCRATCH_PREFIX="/lustre2/scratch"
 
-/*
- * RUNNER 
- */
 Bpipe.run 
 {
-    "%_R*" * [split_fastq_gfu.using(SPLIT_READS_SIZE: 2000000, paired: true)] + "read*_%.fastq" * [align_soapsplice_gfu] + merge_bam_gfu + bam_flagstat_gfu
+    "%_R*" * [split_fastq_gfu.using(SPLIT_READS_SIZE: 2000000, paired: true)] + 
+    "read*_%.fastq" * [align_soapsplice_gfu] + merge_bam_gfu + mark_duplicates_gfu + bam_flagstat_gfu
 }

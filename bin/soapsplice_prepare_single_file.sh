@@ -24,7 +24,8 @@ bail() {
 
 ## help message
 declare -r HELP_MSG="Usage: $SCRIPT_NAME [OPTION]... <reference_genomes_prefix_dir> <scratch_prefix_dir> <soapsplice path>
-  -h    display this help and exit
+  -h       display this help and exit
+  -n name  project name
   -g ref   reference genome
   -I id    sample id
   -P name  Platform [$PL]
@@ -32,7 +33,6 @@ declare -r HELP_MSG="Usage: $SCRIPT_NAME [OPTION]... <reference_genomes_prefix_d
   -L id    Library
   -S name  Sample name
   -C name  Center [$CN]
-  -h       display this help and exit
 "
 
 ## print the usage and exit the shell(default status code: 2)
@@ -121,6 +121,7 @@ SSVERSION=`$SSPLICE | head -n1 | awk '{print \$3}'`;
 echo -e "$SCRIPT_NAME: soapsplice version = $SSVERSION" >&2
 
 # OUTPUT for ENVIRONMENT FILE FROM HERE
+# FIXME in LANE is FCID, here is PU
 #------------------------------------------------------------------------#
 cat << EOF
 REFERENCE_GENOME=$REFERENCE_GENOME
@@ -132,6 +133,7 @@ LOCAL_SCRATCH=$LOCAL_SCRATCH
 ID=$ID
 PL=$PL
 PU=$PU
+FCID=$PU
 LB=$LB
 SM=$SM
 CN=$CN
