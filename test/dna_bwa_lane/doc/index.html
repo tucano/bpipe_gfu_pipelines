@@ -1,0 +1,1883 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <style type='text/css'>
+
+            body {
+                font-family: arial;
+                margin: 0;
+                padding: 0;
+                color: #333;
+            }
+            #hd {
+                padding: 0 1em 1em 1em;
+                background-color: #f0f0f0;
+            }
+            
+            h1 {
+            	padding-top: 0.5em;
+            	margin-top: 0;
+            }
+            
+            #bd {
+                padding: 0.5em 1em 1em 1em;
+            }
+            .docLabel, .constraintLabel { font-weight: bold; margin-right: 1em; }
+            .constraintLabel { xcolor: orange; }
+            .creationDate  { font-size: 80%; font-style: italic; color: #555; }
+            .creationDate a:link, .creationDate a:visited { color: inherit; text-decoration: none; } 
+            .creationDate a:hover, .creationDate a:active { color: inherit; text-decoration: underline; } 
+            
+            .timeline {
+            	height: 2em;
+            	font-size: 70%;
+            	margin-left: 30px;
+            	position: relative;
+            }
+            .timerow {
+            	position: relative;
+            	color: white;
+            }
+            .timeblock {
+            	position: absolute;
+            	padding: 0.2em 0;
+            	text-align: center;
+				-webkit-border-radius: 3px;
+				-moz-border-radius: 3px;
+				border-radius: 3px;            	
+				background-color: #41568D ;
+				background-color: #90B96F;
+			}
+			
+			.timeblock.right {
+				right: 0px;
+			}
+            
+            .timeblock.failed {
+           		background-color: #E64E4E;
+            }
+            
+            .statusMark.fail {
+           		color: #ff5757;
+           		font-weight: bold;
+            }
+            
+           .timeblock.duration {
+	           color: black;
+           	   background-color: white;
+            } 
+            
+            
+            .timelineborder {
+	            border-top: solid 1px #41568D;
+				height: 1px;
+				position: absolute;
+				top: 45%;
+				width: 90%; 
+            }
+            
+            
+            .timelineborder.right {
+            	right: 2px;
+            }
+            
+            a.stageLink:link, a.stageLink:visited {
+            	color: white;
+            	text-decoration: none;
+            }
+            a.stageLink:hover, a.stageLink:active {
+            	color: white;
+            	text-decoration: underline;
+            }
+            
+            hr {
+            	margin-top: 2.8em;
+            }
+            
+			h2.hr {
+			    font-size: 16pt;
+			    color: #444;	
+				position: relative;
+				top: -1em;
+				margin-top: 0;
+				background-color: white;
+				float: left;
+				margin-left: 20px;
+				padding: 0px 10px;
+			}
+			
+			.stageList {
+			     background-color: #F0F0F0;
+			     list-style-type: none;
+			     -webkit-border-top-left-radius: 2px;
+			     -webkit-border-top-right-radius: 2px;
+			     -moz-border-radius-topleft: 2px;
+			     -moz-border-radius-topright: 2px;
+			     border-top-left-radius: 2px;
+			     border-top-right-radius: 2px;
+			}
+			 
+			.stageList table {
+				font-size: 10pt;
+			}
+			.stageList th {
+			 	text-align: right;
+			 	padding-right: 0.5em;
+			 }
+			 .stageList td {
+			 	text-align: left;
+			 	padding-right: 0.5em;
+			 	background: #FCFCFC;
+				padding: 3px 0.5em;
+			 }
+				 
+			 .stageListOuter {
+			 	padding-left: 30px;
+			 	clear: both;
+			 }
+			 .stageList h3 {
+			   box-shadow: 1px 1px 3px black;
+			   position: relative;
+			   padding: 0.5em;
+			   background-color: #41568D;
+			   color: white;
+			     -webkit-border-top-left-radius: 3px;
+			     -webkit-border-top-right-radius: 3px;
+			     -moz-border-radius-topleft: 3px;
+			     -moz-border-radius-topright: 3px;
+			     border-top-left-radius: 3px;
+			     border-top-right-radius: 3px;
+			     font-size: 12pt;
+			 }
+			 a:target {
+			   color: yellow !important;
+			 }
+			 
+			 .stageList .bd {
+			   margin: 0.5em;            
+			   padding-bottom: 1em;
+		     }
+		     
+		     .statusMark {
+		     	position: absolute;
+		     	right: 1em;
+		     }
+		     div.status {
+		     	clear: both;
+		     	margin-left: 30px;
+		     	font-size: 110%;
+		     }
+		     div.status.success {
+		     	color: green;
+		     }
+		     div.status.fail {
+		     	color: #e01f1f;
+		     	font-weight: bold;
+		     }
+		     p.descBody { 
+		     	font-size: 92%; 
+	     	 }
+	     	 .branchTitle {
+	     	 	clear: both;
+	     	 	text-decoration: underline;
+	     	 	font-size: 95%;
+	     	 }
+        </style>
+    </head>
+    <body>
+        <div id='hd'>
+            <h1>DNA alignment with bwa (lane): IOS GFU 009</h1>
+            <p class='creationDate'>Created by <a class='unobtrusiveLink' href='http://bpipe.org'>Bpipe</a>, Tue Oct 15 18:39:04 CEST 2013</p>
+        </div>
+
+        <div id='bd'>
+        	<hr>
+            <h2 class='hr'>Result</h2>
+            <br class='h2hr'>
+            <div class='status success'>
+	            
+	            Succeeded
+	            
+            </div>
+            
+        	<hr>
+            <h2 class='hr'>Timeline</h2>
+            <br class='h2hr'>
+        	
+            <div class='timeline'>
+            	<div class='timelineborder'> </div>
+            	<div class='timelineborder right'> </div>
+		            	
+		            	
+			            
+			            
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock  ' 
+		            	     	 style='left: 0.0%;  width: 93.90012749681257%'>
+		            	     	 
+		            	     	 <a class='stageLink' href='#stage_1_set_stripe_gfu'>set_stripe_gfu</a>
+		            	     	 </div>
+		            	     	 
+				            </div>
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock  right' 
+		            	     	 style='left: 94.90013%;  width: 5.09987250318742%'>
+		            	     	 
+		            	     	 <a class='stageLink' href='#stage_2_align_bwa_gfu'>align...</a>
+		            	     	 </div>
+		            	     	 
+				            </div>
+			            
+	            </div>
+	            <div class='timeline'>
+		            	
+		            	
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock duration' style='left: 0.0%;  width: 93.90012749681257%'>
+		            	     	 
+		            	     	 
+	                              
+	                                6.699 s
+	                                 
+	                             
+		            	     	 </div>
+		            	     	 
+		            	     	 
+			            </div>
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock duration' style='left: 94.90013%;  width: 5.09987250318742%'>
+		            	     	 
+		            	     	 
+	                              
+	                                0.360 s
+	                                 
+	                             
+		            	     	 </div>
+		            	     	 
+		            	     	 
+			            </div>
+			            
+	            </div>
+            
+            <div class='timeline'>
+            	<div class='timelineborder'> </div>
+            	<div class='timelineborder right'> </div>
+		            	
+		            	
+			            
+			            
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock  ' 
+		            	     	 style='left: 0.0%;  width: 93.80611378431928%'>
+		            	     	 
+		            	     	 <a class='stageLink' href='#stage_1_set_stripe_gfu'>set_stripe_gfu</a>
+		            	     	 </div>
+		            	     	 
+				            </div>
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock  right' 
+		            	     	 style='left: 94.806114%;  width: 5.193886215680724%'>
+		            	     	 
+		            	     	 <a class='stageLink' href='#stage_2_align_bwa_gfu'>align...</a>
+		            	     	 </div>
+		            	     	 
+				            </div>
+			            
+	            </div>
+	            <div class='timeline'>
+		            	
+		            	
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock duration' style='left: 0.0%;  width: 93.80611378431928%'>
+		            	     	 
+		            	     	 
+	                              
+	                                6.699 s
+	                                 
+	                             
+		            	     	 </div>
+		            	     	 
+		            	     	 
+			            </div>
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock duration' style='left: 94.806114%;  width: 5.193886215680724%'>
+		            	     	 
+		            	     	 
+	                              
+	                                0.367 s
+	                                 
+	                             
+		            	     	 </div>
+		            	     	 
+		            	     	 
+			            </div>
+			            
+	            </div>
+            
+            <div class='timeline'>
+            	<div class='timelineborder'> </div>
+            	<div class='timelineborder right'> </div>
+		            	
+		            	
+			            
+			            
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock  ' 
+		            	     	 style='left: 0.0%;  width: 93.84638255698712%'>
+		            	     	 
+		            	     	 <a class='stageLink' href='#stage_1_set_stripe_gfu'>set_stripe_gfu</a>
+		            	     	 </div>
+		            	     	 
+				            </div>
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock  right' 
+		            	     	 style='left: 94.84638%;  width: 5.153617443012884%'>
+		            	     	 
+		            	     	 <a class='stageLink' href='#stage_2_align_bwa_gfu'>align...</a>
+		            	     	 </div>
+		            	     	 
+				            </div>
+			            
+	            </div>
+	            <div class='timeline'>
+		            	
+		            	
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock duration' style='left: 0.0%;  width: 93.84638255698712%'>
+		            	     	 
+		            	     	 
+	                              
+	                                6.699 s
+	                                 
+	                             
+		            	     	 </div>
+		            	     	 
+		            	     	 
+			            </div>
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock duration' style='left: 94.84638%;  width: 5.153617443012884%'>
+		            	     	 
+		            	     	 
+	                              
+	                                0.364 s
+	                                 
+	                             
+		            	     	 </div>
+		            	     	 
+		            	     	 
+			            </div>
+			            
+	            </div>
+            
+            <div class='timeline'>
+            	<div class='timelineborder'> </div>
+            	<div class='timelineborder right'> </div>
+		            	
+		            	
+			            
+			            
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock  ' 
+		            	     	 style='left: 0.0%;  width: 93.88668555240793%'>
+		            	     	 
+		            	     	 <a class='stageLink' href='#stage_1_set_stripe_gfu'>set_stripe_gfu</a>
+		            	     	 </div>
+		            	     	 
+				            </div>
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock  right' 
+		            	     	 style='left: 94.88669%;  width: 5.113314447592067%'>
+		            	     	 
+		            	     	 <a class='stageLink' href='#stage_2_align_bwa_gfu'>align...</a>
+		            	     	 </div>
+		            	     	 
+				            </div>
+			            
+	            </div>
+	            <div class='timeline'>
+		            	
+		            	
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock duration' style='left: 0.0%;  width: 93.88668555240793%'>
+		            	     	 
+		            	     	 
+	                              
+	                                6.699 s
+	                                 
+	                             
+		            	     	 </div>
+		            	     	 
+		            	     	 
+			            </div>
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock duration' style='left: 94.88669%;  width: 5.113314447592067%'>
+		            	     	 
+		            	     	 
+	                              
+	                                0.361 s
+	                                 
+	                             
+		            	     	 </div>
+		            	     	 
+		            	     	 
+			            </div>
+			            
+	            </div>
+            
+            <div class='timeline'>
+            	<div class='timelineborder'> </div>
+            	<div class='timelineborder right'> </div>
+		            	
+		            	
+			            
+			            
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock  ' 
+		            	     	 style='left: 0.0%;  width: 49.27769438607025%'>
+		            	     	 
+		            	     	 <a class='stageLink' href='#stage_1_set_stripe_gfu'>set_stripe_gfu</a>
+		            	     	 </div>
+		            	     	 
+				            </div>
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock  right' 
+		            	     	 style='left: 50.277695%;  width: 49.72230561392975%'>
+		            	     	 
+		            	     	 <a class='stageLink' href='#stage_2_sam_bwa_gfu'>sam_bwa_gfu</a>
+		            	     	 </div>
+		            	     	 
+				            </div>
+			            
+	            </div>
+	            <div class='timeline'>
+		            	
+		            	
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock duration' style='left: 0.0%;  width: 49.27769438607025%'>
+		            	     	 
+		            	     	 
+	                              
+	                                6.699 s
+	                                 
+	                             
+		            	     	 </div>
+		            	     	 
+		            	     	 
+			            </div>
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock duration' style='left: 50.277695%;  width: 49.72230561392975%'>
+		            	     	 
+		            	     	 
+	                              
+	                                6.625 s
+	                                 
+	                             
+		            	     	 </div>
+		            	     	 
+		            	     	 
+			            </div>
+			            
+	            </div>
+            
+            <div class='timeline'>
+            	<div class='timelineborder'> </div>
+            	<div class='timelineborder right'> </div>
+		            	
+		            	
+			            
+			            
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock  ' 
+		            	     	 style='left: 0.0%;  width: 49.34570870284082%'>
+		            	     	 
+		            	     	 <a class='stageLink' href='#stage_1_set_stripe_gfu'>set_stripe_gfu</a>
+		            	     	 </div>
+		            	     	 
+				            </div>
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock  right' 
+		            	     	 style='left: 50.345707%;  width: 49.654291297159176%'>
+		            	     	 
+		            	     	 <a class='stageLink' href='#stage_2_sam_bwa_gfu'>sam_bwa_gfu</a>
+		            	     	 </div>
+		            	     	 
+				            </div>
+			            
+	            </div>
+	            <div class='timeline'>
+		            	
+		            	
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock duration' style='left: 0.0%;  width: 49.34570870284082%'>
+		            	     	 
+		            	     	 
+	                              
+	                                6.699 s
+	                                 
+	                             
+		            	     	 </div>
+		            	     	 
+		            	     	 
+			            </div>
+			            
+			            <div class='timerow'>
+			            	<div 
+		            	     	 class='timeblock duration' style='left: 50.345707%;  width: 49.654291297159176%'>
+		            	     	 
+		            	     	 
+	                              
+	                                6.607 s
+	                                 
+	                             
+		            	     	 </div>
+		            	     	 
+		            	     	 
+			            </div>
+			            
+	            </div>
+            
+            
+            
+        	<hr>
+            <h2 class='hr'>Pipeline Stages</h2>
+            <br class='h2hr'>
+            
+        	
+            <ol class='stageListOuter'>
+            
+            	
+            		<p class='branchTitle'>Branch 1</p>
+        		
+            
+	            
+	                <li class='stageList'>
+	                    <h3 class='stageTitle'><a name='stage_1_set_stripe_gfu'>
+	                        
+	                            set_stripe_gfu : Set lustre options for working directory 
+	                        
+	                        </a>
+	                        
+	                        <span class='statusMark success' >
+	                        
+	                        &#10003;
+	                        
+	                        </span>
+	                    </h3>
+	                    <div class='bd'>
+	
+	                    
+	                        
+	                        
+	                            <p class='descBody'>
+            Lustre options: 
+                -c -1 : a stripe_count of -1 means to stripe over all available OSTs.
+                -i -1 : a start_ost_index of -1 allows the MDS to choose the starting index and it is strongly recommended, as this allows space and load balancing to be done by the MDS as needed.
+                -s 2M : Stripsize 2 megabytes
+        </p>
+	                        
+	
+							<table>
+	                        
+							<tr>
+	                            <th class='authorBody'>Author</th>
+	                            <td>davide.rambaldi@gmail.com</td>
+	                        </tr>
+	                        
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Inputs</th>
+	                        	
+		                            <td>
+		                            <ul class='inputs'>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R1_002.fastq.gz</li>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R1_003.fastq.gz</li>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R2_002.fastq.gz</li>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R2_003.fastq.gz</li>
+	                                
+	                                </ul>
+	                                </td>
+	                        	
+	                            </td>
+	                        </tr>
+	                        
+                            
+                            <tr><th>Commands</th><td>28</td></tr>
+	
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Outputs</th>
+	                            
+	                            <td>
+	                            	<ul class='outputs'>
+	                            	
+	                            		<li>B1_TTAGGC_L003_R1_002.fastq.gz</li>
+	                            	
+	                            	</ul>
+	                        	</td>
+	                            
+	                        </tr>
+	                        
+	
+	                        
+	
+	                        
+							<tr>
+	                            <th class='constraintLabel'>Constraints</th>
+	                            <td>It is a non blocking stage (Fails in non lustre fs, but will return always true).</td>
+	                        </tr>
+	                        
+	                        
+	                        
+							<tr>
+	                            <th class='docLabel'>Execution Time</th>
+	                            <td>
+	                            	
+		                                2013-10-15 18:38:50 - 2013-10-15 18:38:56
+	                                
+	                                
+	                                (6.699 seconds)
+	                                
+	                            </td>
+	                        </tr>
+	                        
+							</table>
+	                    
+	                    
+	                    </div>
+	                </li>
+	            
+	                <li class='stageList'>
+	                    <h3 class='stageTitle'><a name='stage_1_align_bwa_gfu'>
+	                        
+	                            align_bwa_gfu : GFU: align DNA reads with bwa 
+	                        
+	                        </a>
+	                        
+	                        <span class='statusMark success' >
+	                        
+	                        &#10003;
+	                        
+	                        </span>
+	                    </h3>
+	                    <div class='bd'>
+	
+	                    
+	                        
+	                        
+	                            <p class='descBody'>Use bwa aln to align reads on the reference genome. Bwa options: -q 30</p>
+	                        
+	
+							<table>
+	                        
+							<tr>
+	                            <th class='authorBody'>Author</th>
+	                            <td>davide.rambaldi@gmail.com</td>
+	                        </tr>
+	                        
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Inputs</th>
+	                        	
+		                            <td>
+		                            <ul class='inputs'>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R1_002.fastq.gz</li>
+	                                
+	                                </ul>
+	                                </td>
+	                        	
+	                            </td>
+	                        </tr>
+	                        
+                            
+                            <tr><th>Commands</th><td></td></tr>
+	
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Outputs</th>
+	                            
+	                            <td>
+	                            	<ul class='outputs'>
+	                            	
+	                            		<li>B1_TTAGGC_L003_R1_002.sai</li>
+	                            	
+	                            	</ul>
+	                        	</td>
+	                            
+	                        </tr>
+	                        
+	
+	                        
+	
+	                        
+							<tr>
+	                            <th class='constraintLabel'>Constraints</th>
+	                            <td>Work with fastq and fastq.gz files.</td>
+	                        </tr>
+	                        
+	                        
+	                        
+							<tr>
+	                            <th class='docLabel'>Execution Time</th>
+	                            <td>
+	                            	
+		                                2013-10-15 18:38:56 
+	                                
+	                                
+	                                (0.360 seconds)
+	                                
+	                            </td>
+	                        </tr>
+	                        
+							</table>
+	                    
+	                    
+	                    </div>
+	                </li>
+	            
+	            </ol>
+	        
+            <ol class='stageListOuter'>
+            
+            	
+            		<p class='branchTitle'>Branch 2</p>
+        		
+            
+	            
+	                <li class='stageList'>
+	                    <h3 class='stageTitle'><a name='stage_2_set_stripe_gfu'>
+	                        
+	                            set_stripe_gfu : Set lustre options for working directory 
+	                        
+	                        </a>
+	                        
+	                        <span class='statusMark success' >
+	                        
+	                        &#10003;
+	                        
+	                        </span>
+	                    </h3>
+	                    <div class='bd'>
+	
+	                    
+	                        
+	                        
+	                            <p class='descBody'>
+            Lustre options: 
+                -c -1 : a stripe_count of -1 means to stripe over all available OSTs.
+                -i -1 : a start_ost_index of -1 allows the MDS to choose the starting index and it is strongly recommended, as this allows space and load balancing to be done by the MDS as needed.
+                -s 2M : Stripsize 2 megabytes
+        </p>
+	                        
+	
+							<table>
+	                        
+							<tr>
+	                            <th class='authorBody'>Author</th>
+	                            <td>davide.rambaldi@gmail.com</td>
+	                        </tr>
+	                        
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Inputs</th>
+	                        	
+		                            <td>
+		                            <ul class='inputs'>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R1_002.fastq.gz</li>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R1_003.fastq.gz</li>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R2_002.fastq.gz</li>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R2_003.fastq.gz</li>
+	                                
+	                                </ul>
+	                                </td>
+	                        	
+	                            </td>
+	                        </tr>
+	                        
+                            
+                            <tr><th>Commands</th><td>28</td></tr>
+	
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Outputs</th>
+	                            
+	                            <td>
+	                            	<ul class='outputs'>
+	                            	
+	                            		<li>B1_TTAGGC_L003_R1_002.fastq.gz</li>
+	                            	
+	                            	</ul>
+	                        	</td>
+	                            
+	                        </tr>
+	                        
+	
+	                        
+	
+	                        
+							<tr>
+	                            <th class='constraintLabel'>Constraints</th>
+	                            <td>It is a non blocking stage (Fails in non lustre fs, but will return always true).</td>
+	                        </tr>
+	                        
+	                        
+	                        
+							<tr>
+	                            <th class='docLabel'>Execution Time</th>
+	                            <td>
+	                            	
+		                                2013-10-15 18:38:50 - 2013-10-15 18:38:56
+	                                
+	                                
+	                                (6.699 seconds)
+	                                
+	                            </td>
+	                        </tr>
+	                        
+							</table>
+	                    
+	                    
+	                    </div>
+	                </li>
+	            
+	                <li class='stageList'>
+	                    <h3 class='stageTitle'><a name='stage_2_align_bwa_gfu'>
+	                        
+	                            align_bwa_gfu : GFU: align DNA reads with bwa 
+	                        
+	                        </a>
+	                        
+	                        <span class='statusMark success' >
+	                        
+	                        &#10003;
+	                        
+	                        </span>
+	                    </h3>
+	                    <div class='bd'>
+	
+	                    
+	                        
+	                        
+	                            <p class='descBody'>Use bwa aln to align reads on the reference genome. Bwa options: -q 30</p>
+	                        
+	
+							<table>
+	                        
+							<tr>
+	                            <th class='authorBody'>Author</th>
+	                            <td>davide.rambaldi@gmail.com</td>
+	                        </tr>
+	                        
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Inputs</th>
+	                        	
+		                            <td>
+		                            <ul class='inputs'>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R1_003.fastq.gz</li>
+	                                
+	                                </ul>
+	                                </td>
+	                        	
+	                            </td>
+	                        </tr>
+	                        
+                            
+                            <tr><th>Commands</th><td></td></tr>
+	
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Outputs</th>
+	                            
+	                            <td>
+	                            	<ul class='outputs'>
+	                            	
+	                            		<li>B1_TTAGGC_L003_R1_003.sai</li>
+	                            	
+	                            	</ul>
+	                        	</td>
+	                            
+	                        </tr>
+	                        
+	
+	                        
+	
+	                        
+							<tr>
+	                            <th class='constraintLabel'>Constraints</th>
+	                            <td>Work with fastq and fastq.gz files.</td>
+	                        </tr>
+	                        
+	                        
+	                        
+							<tr>
+	                            <th class='docLabel'>Execution Time</th>
+	                            <td>
+	                            	
+		                                2013-10-15 18:38:56 
+	                                
+	                                
+	                                (0.367 seconds)
+	                                
+	                            </td>
+	                        </tr>
+	                        
+							</table>
+	                    
+	                    
+	                    </div>
+	                </li>
+	            
+	            </ol>
+	        
+            <ol class='stageListOuter'>
+            
+            	
+            		<p class='branchTitle'>Branch 3</p>
+        		
+            
+	            
+	                <li class='stageList'>
+	                    <h3 class='stageTitle'><a name='stage_3_set_stripe_gfu'>
+	                        
+	                            set_stripe_gfu : Set lustre options for working directory 
+	                        
+	                        </a>
+	                        
+	                        <span class='statusMark success' >
+	                        
+	                        &#10003;
+	                        
+	                        </span>
+	                    </h3>
+	                    <div class='bd'>
+	
+	                    
+	                        
+	                        
+	                            <p class='descBody'>
+            Lustre options: 
+                -c -1 : a stripe_count of -1 means to stripe over all available OSTs.
+                -i -1 : a start_ost_index of -1 allows the MDS to choose the starting index and it is strongly recommended, as this allows space and load balancing to be done by the MDS as needed.
+                -s 2M : Stripsize 2 megabytes
+        </p>
+	                        
+	
+							<table>
+	                        
+							<tr>
+	                            <th class='authorBody'>Author</th>
+	                            <td>davide.rambaldi@gmail.com</td>
+	                        </tr>
+	                        
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Inputs</th>
+	                        	
+		                            <td>
+		                            <ul class='inputs'>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R1_002.fastq.gz</li>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R1_003.fastq.gz</li>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R2_002.fastq.gz</li>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R2_003.fastq.gz</li>
+	                                
+	                                </ul>
+	                                </td>
+	                        	
+	                            </td>
+	                        </tr>
+	                        
+                            
+                            <tr><th>Commands</th><td>28</td></tr>
+	
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Outputs</th>
+	                            
+	                            <td>
+	                            	<ul class='outputs'>
+	                            	
+	                            		<li>B1_TTAGGC_L003_R1_002.fastq.gz</li>
+	                            	
+	                            	</ul>
+	                        	</td>
+	                            
+	                        </tr>
+	                        
+	
+	                        
+	
+	                        
+							<tr>
+	                            <th class='constraintLabel'>Constraints</th>
+	                            <td>It is a non blocking stage (Fails in non lustre fs, but will return always true).</td>
+	                        </tr>
+	                        
+	                        
+	                        
+							<tr>
+	                            <th class='docLabel'>Execution Time</th>
+	                            <td>
+	                            	
+		                                2013-10-15 18:38:50 - 2013-10-15 18:38:56
+	                                
+	                                
+	                                (6.699 seconds)
+	                                
+	                            </td>
+	                        </tr>
+	                        
+							</table>
+	                    
+	                    
+	                    </div>
+	                </li>
+	            
+	                <li class='stageList'>
+	                    <h3 class='stageTitle'><a name='stage_3_align_bwa_gfu'>
+	                        
+	                            align_bwa_gfu : GFU: align DNA reads with bwa 
+	                        
+	                        </a>
+	                        
+	                        <span class='statusMark success' >
+	                        
+	                        &#10003;
+	                        
+	                        </span>
+	                    </h3>
+	                    <div class='bd'>
+	
+	                    
+	                        
+	                        
+	                            <p class='descBody'>Use bwa aln to align reads on the reference genome. Bwa options: -q 30</p>
+	                        
+	
+							<table>
+	                        
+							<tr>
+	                            <th class='authorBody'>Author</th>
+	                            <td>davide.rambaldi@gmail.com</td>
+	                        </tr>
+	                        
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Inputs</th>
+	                        	
+		                            <td>
+		                            <ul class='inputs'>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R2_002.fastq.gz</li>
+	                                
+	                                </ul>
+	                                </td>
+	                        	
+	                            </td>
+	                        </tr>
+	                        
+                            
+                            <tr><th>Commands</th><td></td></tr>
+	
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Outputs</th>
+	                            
+	                            <td>
+	                            	<ul class='outputs'>
+	                            	
+	                            		<li>B1_TTAGGC_L003_R2_002.sai</li>
+	                            	
+	                            	</ul>
+	                        	</td>
+	                            
+	                        </tr>
+	                        
+	
+	                        
+	
+	                        
+							<tr>
+	                            <th class='constraintLabel'>Constraints</th>
+	                            <td>Work with fastq and fastq.gz files.</td>
+	                        </tr>
+	                        
+	                        
+	                        
+							<tr>
+	                            <th class='docLabel'>Execution Time</th>
+	                            <td>
+	                            	
+		                                2013-10-15 18:38:56 
+	                                
+	                                
+	                                (0.364 seconds)
+	                                
+	                            </td>
+	                        </tr>
+	                        
+							</table>
+	                    
+	                    
+	                    </div>
+	                </li>
+	            
+	            </ol>
+	        
+            <ol class='stageListOuter'>
+            
+            	
+            		<p class='branchTitle'>Branch 4</p>
+        		
+            
+	            
+	                <li class='stageList'>
+	                    <h3 class='stageTitle'><a name='stage_4_set_stripe_gfu'>
+	                        
+	                            set_stripe_gfu : Set lustre options for working directory 
+	                        
+	                        </a>
+	                        
+	                        <span class='statusMark success' >
+	                        
+	                        &#10003;
+	                        
+	                        </span>
+	                    </h3>
+	                    <div class='bd'>
+	
+	                    
+	                        
+	                        
+	                            <p class='descBody'>
+            Lustre options: 
+                -c -1 : a stripe_count of -1 means to stripe over all available OSTs.
+                -i -1 : a start_ost_index of -1 allows the MDS to choose the starting index and it is strongly recommended, as this allows space and load balancing to be done by the MDS as needed.
+                -s 2M : Stripsize 2 megabytes
+        </p>
+	                        
+	
+							<table>
+	                        
+							<tr>
+	                            <th class='authorBody'>Author</th>
+	                            <td>davide.rambaldi@gmail.com</td>
+	                        </tr>
+	                        
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Inputs</th>
+	                        	
+		                            <td>
+		                            <ul class='inputs'>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R1_002.fastq.gz</li>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R1_003.fastq.gz</li>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R2_002.fastq.gz</li>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R2_003.fastq.gz</li>
+	                                
+	                                </ul>
+	                                </td>
+	                        	
+	                            </td>
+	                        </tr>
+	                        
+                            
+                            <tr><th>Commands</th><td>28</td></tr>
+	
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Outputs</th>
+	                            
+	                            <td>
+	                            	<ul class='outputs'>
+	                            	
+	                            		<li>B1_TTAGGC_L003_R1_002.fastq.gz</li>
+	                            	
+	                            	</ul>
+	                        	</td>
+	                            
+	                        </tr>
+	                        
+	
+	                        
+	
+	                        
+							<tr>
+	                            <th class='constraintLabel'>Constraints</th>
+	                            <td>It is a non blocking stage (Fails in non lustre fs, but will return always true).</td>
+	                        </tr>
+	                        
+	                        
+	                        
+							<tr>
+	                            <th class='docLabel'>Execution Time</th>
+	                            <td>
+	                            	
+		                                2013-10-15 18:38:50 - 2013-10-15 18:38:56
+	                                
+	                                
+	                                (6.699 seconds)
+	                                
+	                            </td>
+	                        </tr>
+	                        
+							</table>
+	                    
+	                    
+	                    </div>
+	                </li>
+	            
+	                <li class='stageList'>
+	                    <h3 class='stageTitle'><a name='stage_4_align_bwa_gfu'>
+	                        
+	                            align_bwa_gfu : GFU: align DNA reads with bwa 
+	                        
+	                        </a>
+	                        
+	                        <span class='statusMark success' >
+	                        
+	                        &#10003;
+	                        
+	                        </span>
+	                    </h3>
+	                    <div class='bd'>
+	
+	                    
+	                        
+	                        
+	                            <p class='descBody'>Use bwa aln to align reads on the reference genome. Bwa options: -q 30</p>
+	                        
+	
+							<table>
+	                        
+							<tr>
+	                            <th class='authorBody'>Author</th>
+	                            <td>davide.rambaldi@gmail.com</td>
+	                        </tr>
+	                        
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Inputs</th>
+	                        	
+		                            <td>
+		                            <ul class='inputs'>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R2_003.fastq.gz</li>
+	                                
+	                                </ul>
+	                                </td>
+	                        	
+	                            </td>
+	                        </tr>
+	                        
+                            
+                            <tr><th>Commands</th><td></td></tr>
+	
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Outputs</th>
+	                            
+	                            <td>
+	                            	<ul class='outputs'>
+	                            	
+	                            		<li>B1_TTAGGC_L003_R2_003.sai</li>
+	                            	
+	                            	</ul>
+	                        	</td>
+	                            
+	                        </tr>
+	                        
+	
+	                        
+	
+	                        
+							<tr>
+	                            <th class='constraintLabel'>Constraints</th>
+	                            <td>Work with fastq and fastq.gz files.</td>
+	                        </tr>
+	                        
+	                        
+	                        
+							<tr>
+	                            <th class='docLabel'>Execution Time</th>
+	                            <td>
+	                            	
+		                                2013-10-15 18:38:56 
+	                                
+	                                
+	                                (0.361 seconds)
+	                                
+	                            </td>
+	                        </tr>
+	                        
+							</table>
+	                    
+	                    
+	                    </div>
+	                </li>
+	            
+	            </ol>
+	        
+            <ol class='stageListOuter'>
+            
+            	
+            		<p class='branchTitle'>Branch 5</p>
+        		
+            
+	            
+	                <li class='stageList'>
+	                    <h3 class='stageTitle'><a name='stage_5_set_stripe_gfu'>
+	                        
+	                            set_stripe_gfu : Set lustre options for working directory 
+	                        
+	                        </a>
+	                        
+	                        <span class='statusMark success' >
+	                        
+	                        &#10003;
+	                        
+	                        </span>
+	                    </h3>
+	                    <div class='bd'>
+	
+	                    
+	                        
+	                        
+	                            <p class='descBody'>
+            Lustre options: 
+                -c -1 : a stripe_count of -1 means to stripe over all available OSTs.
+                -i -1 : a start_ost_index of -1 allows the MDS to choose the starting index and it is strongly recommended, as this allows space and load balancing to be done by the MDS as needed.
+                -s 2M : Stripsize 2 megabytes
+        </p>
+	                        
+	
+							<table>
+	                        
+							<tr>
+	                            <th class='authorBody'>Author</th>
+	                            <td>davide.rambaldi@gmail.com</td>
+	                        </tr>
+	                        
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Inputs</th>
+	                        	
+		                            <td>
+		                            <ul class='inputs'>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R1_002.fastq.gz</li>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R1_003.fastq.gz</li>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R2_002.fastq.gz</li>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R2_003.fastq.gz</li>
+	                                
+	                                </ul>
+	                                </td>
+	                        	
+	                            </td>
+	                        </tr>
+	                        
+                            
+                            <tr><th>Commands</th><td>28</td></tr>
+	
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Outputs</th>
+	                            
+	                            <td>
+	                            	<ul class='outputs'>
+	                            	
+	                            		<li>B1_TTAGGC_L003_R1_002.fastq.gz</li>
+	                            	
+	                            	</ul>
+	                        	</td>
+	                            
+	                        </tr>
+	                        
+	
+	                        
+	
+	                        
+							<tr>
+	                            <th class='constraintLabel'>Constraints</th>
+	                            <td>It is a non blocking stage (Fails in non lustre fs, but will return always true).</td>
+	                        </tr>
+	                        
+	                        
+	                        
+							<tr>
+	                            <th class='docLabel'>Execution Time</th>
+	                            <td>
+	                            	
+		                                2013-10-15 18:38:50 - 2013-10-15 18:38:56
+	                                
+	                                
+	                                (6.699 seconds)
+	                                
+	                            </td>
+	                        </tr>
+	                        
+							</table>
+	                    
+	                    
+	                    </div>
+	                </li>
+	            
+	                <li class='stageList'>
+	                    <h3 class='stageTitle'><a name='stage_5_sam_bwa_gfu'>
+	                        
+	                            sam_bwa_gfu : GFU sampe/samse bwa: merge paired ends with sampe or single end with samse 
+	                        
+	                        </a>
+	                        
+	                        <span class='statusMark success' >
+	                        
+	                        &#10003;
+	                        
+	                        </span>
+	                    </h3>
+	                    <div class='bd'>
+	
+	                    
+	                        
+	                        
+	                            <p class='descBody'>
+            Generate alignments in the SAM format given paired-end reads (repetitive read pairs will be placed randomly).
+            Sort by coordinates and generate a bam file.
+        </p>
+	                        
+	
+							<table>
+	                        
+							<tr>
+	                            <th class='authorBody'>Author</th>
+	                            <td>davide.rambaldi@gmail.com</td>
+	                        </tr>
+	                        
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Inputs</th>
+	                        	
+		                            <td>
+		                            <ul class='inputs'>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R1_002.sai</li>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R2_002.sai</li>
+	                                
+	                                </ul>
+	                                </td>
+	                        	
+	                            </td>
+	                        </tr>
+	                        
+                            
+                            <tr><th>Commands</th><td>42</td></tr>
+	
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Outputs</th>
+	                            
+	                            <td>
+	                            	<ul class='outputs'>
+	                            	
+	                            		<li>B1_TTAGGC_L003_R1_002.bam</li>
+	                            	
+	                            	</ul>
+	                        	</td>
+	                            
+	                        </tr>
+	                        
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Tools</th>
+	                            <td>
+	                            <ul class='tools'>
+	                                
+	                                  <li class='input'>
+	                                  	
+	                                  		<a href='http://samtools.sourceforge.net/'>samtools</a>
+	                                  	 :
+	                                    0.1.18
+
+	                                    
+	                                  	
+	                                  	 - <span class=toolDesc>A suite of utilities for sorting, indexing, viewing and calling variants on NGS data</span>
+		                                 
+	                                  </li>
+	                                
+	                                  <li class='input'>
+	                                  	
+	                                  		<a href='http://bio-bwa.sourceforge.net/'>bwa</a>
+	                                  	 :
+	                                    0.6.1-r104
+
+	                                    
+	                                  	
+	                                  	 - <span class=toolDesc>BWA is a software package for mapping low-divergent short read sequences against a large reference genome</span>
+		                                 
+	                                  </li>
+	                                
+	                            </ul>
+	                            </td>
+	                        </tr>
+	                        
+	
+	                        
+							<tr>
+	                            <th class='constraintLabel'>Constraints</th>
+	                            <td>The user should define if files are compressed (compressed: true) and if reads are paired (paired: true)</td>
+	                        </tr>
+	                        
+	                        
+	                        
+							<tr>
+	                            <th class='docLabel'>Execution Time</th>
+	                            <td>
+	                            	
+		                                2013-10-15 18:38:57 - 2013-10-15 18:39:4
+	                                
+	                                
+	                                (6.625 seconds)
+	                                
+	                            </td>
+	                        </tr>
+	                        
+							</table>
+	                    
+	                    
+	                    </div>
+	                </li>
+	            
+	            </ol>
+	        
+            <ol class='stageListOuter'>
+            
+            	
+            		<p class='branchTitle'>Branch 6</p>
+        		
+            
+	            
+	                <li class='stageList'>
+	                    <h3 class='stageTitle'><a name='stage_6_set_stripe_gfu'>
+	                        
+	                            set_stripe_gfu : Set lustre options for working directory 
+	                        
+	                        </a>
+	                        
+	                        <span class='statusMark success' >
+	                        
+	                        &#10003;
+	                        
+	                        </span>
+	                    </h3>
+	                    <div class='bd'>
+	
+	                    
+	                        
+	                        
+	                            <p class='descBody'>
+            Lustre options: 
+                -c -1 : a stripe_count of -1 means to stripe over all available OSTs.
+                -i -1 : a start_ost_index of -1 allows the MDS to choose the starting index and it is strongly recommended, as this allows space and load balancing to be done by the MDS as needed.
+                -s 2M : Stripsize 2 megabytes
+        </p>
+	                        
+	
+							<table>
+	                        
+							<tr>
+	                            <th class='authorBody'>Author</th>
+	                            <td>davide.rambaldi@gmail.com</td>
+	                        </tr>
+	                        
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Inputs</th>
+	                        	
+		                            <td>
+		                            <ul class='inputs'>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R1_002.fastq.gz</li>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R1_003.fastq.gz</li>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R2_002.fastq.gz</li>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R2_003.fastq.gz</li>
+	                                
+	                                </ul>
+	                                </td>
+	                        	
+	                            </td>
+	                        </tr>
+	                        
+                            
+                            <tr><th>Commands</th><td>28</td></tr>
+	
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Outputs</th>
+	                            
+	                            <td>
+	                            	<ul class='outputs'>
+	                            	
+	                            		<li>B1_TTAGGC_L003_R1_002.fastq.gz</li>
+	                            	
+	                            	</ul>
+	                        	</td>
+	                            
+	                        </tr>
+	                        
+	
+	                        
+	
+	                        
+							<tr>
+	                            <th class='constraintLabel'>Constraints</th>
+	                            <td>It is a non blocking stage (Fails in non lustre fs, but will return always true).</td>
+	                        </tr>
+	                        
+	                        
+	                        
+							<tr>
+	                            <th class='docLabel'>Execution Time</th>
+	                            <td>
+	                            	
+		                                2013-10-15 18:38:50 - 2013-10-15 18:38:56
+	                                
+	                                
+	                                (6.699 seconds)
+	                                
+	                            </td>
+	                        </tr>
+	                        
+							</table>
+	                    
+	                    
+	                    </div>
+	                </li>
+	            
+	                <li class='stageList'>
+	                    <h3 class='stageTitle'><a name='stage_6_sam_bwa_gfu'>
+	                        
+	                            sam_bwa_gfu : GFU sampe/samse bwa: merge paired ends with sampe or single end with samse 
+	                        
+	                        </a>
+	                        
+	                        <span class='statusMark success' >
+	                        
+	                        &#10003;
+	                        
+	                        </span>
+	                    </h3>
+	                    <div class='bd'>
+	
+	                    
+	                        
+	                        
+	                            <p class='descBody'>
+            Generate alignments in the SAM format given paired-end reads (repetitive read pairs will be placed randomly).
+            Sort by coordinates and generate a bam file.
+        </p>
+	                        
+	
+							<table>
+	                        
+							<tr>
+	                            <th class='authorBody'>Author</th>
+	                            <td>davide.rambaldi@gmail.com</td>
+	                        </tr>
+	                        
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Inputs</th>
+	                        	
+		                            <td>
+		                            <ul class='inputs'>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R1_003.sai</li>
+	                                
+	                                    <li class='input'>B1_TTAGGC_L003_R2_003.sai</li>
+	                                
+	                                </ul>
+	                                </td>
+	                        	
+	                            </td>
+	                        </tr>
+	                        
+                            
+                            <tr><th>Commands</th><td>41</td></tr>
+	
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Outputs</th>
+	                            
+	                            <td>
+	                            	<ul class='outputs'>
+	                            	
+	                            		<li>B1_TTAGGC_L003_R1_003.bam</li>
+	                            	
+	                            	</ul>
+	                        	</td>
+	                            
+	                        </tr>
+	                        
+	
+	                        
+							<tr>
+	                            <th class='docLabel'>Tools</th>
+	                            <td>
+	                            <ul class='tools'>
+	                                
+	                                  <li class='input'>
+	                                  	
+	                                  		<a href='http://samtools.sourceforge.net/'>samtools</a>
+	                                  	 :
+	                                    0.1.18
+
+	                                    
+	                                  	
+	                                  	 - <span class=toolDesc>A suite of utilities for sorting, indexing, viewing and calling variants on NGS data</span>
+		                                 
+	                                  </li>
+	                                
+	                                  <li class='input'>
+	                                  	
+	                                  		<a href='http://bio-bwa.sourceforge.net/'>bwa</a>
+	                                  	 :
+	                                    0.6.1-r104
+
+	                                    
+	                                  	
+	                                  	 - <span class=toolDesc>BWA is a software package for mapping low-divergent short read sequences against a large reference genome</span>
+		                                 
+	                                  </li>
+	                                
+	                            </ul>
+	                            </td>
+	                        </tr>
+	                        
+	
+	                        
+							<tr>
+	                            <th class='constraintLabel'>Constraints</th>
+	                            <td>The user should define if files are compressed (compressed: true) and if reads are paired (paired: true)</td>
+	                        </tr>
+	                        
+	                        
+	                        
+							<tr>
+	                            <th class='docLabel'>Execution Time</th>
+	                            <td>
+	                            	
+		                                2013-10-15 18:38:57 - 2013-10-15 18:39:4
+	                                
+	                                
+	                                (6.607 seconds)
+	                                
+	                            </td>
+	                        </tr>
+	                        
+							</table>
+	                    
+	                    
+	                    </div>
+	                </li>
+	            
+	            </ol>
+	        
+	        </div>
+    </body>
+</html>
