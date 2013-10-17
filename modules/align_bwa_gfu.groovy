@@ -1,7 +1,7 @@
 // MODULE ALIGN BWA GFU
 BWA="/usr/local/cluster/bin/bwa"
 
-@Transform("sai")
+@intermediate
 align_bwa_gfu =
 {
     // use -I for base64 Illumina quality
@@ -23,9 +23,11 @@ align_bwa_gfu =
             ""","bwa_aln"
         }
     } else {
-        exec """
-            echo -e "[align_bwa_gfu]: bwa aln on node $HOSTNAME with input (not compressed) $input.fastq and output $output.sai" >&2;
-            $BWA aln -t 2 $BWAOPT_ALN $REFERENCE_GENOME $input.fastq > $output.sai
-        ""","bwa_aln"
+        from("fastq") produce(input.prefix - ".fastq" + ".sai") {
+            exec """
+                echo -e "[align_bwa_gfu]: bwa aln on node $HOSTNAME with input (not compressed) $input.fastq and output $output.sai" >&2;
+                $BWA aln -t 2 $BWAOPT_ALN $REFERENCE_GENOME $input.fastq > $output.sai
+            ""","bwa_aln"
+        }
     }
 }

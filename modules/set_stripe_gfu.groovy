@@ -1,9 +1,10 @@
 // MODULE CONFIG LUSTRE FS
 LSF="/usr/bin/lfs"
 
+@intermediate
 set_stripe_gfu =
 {
-    doc title: "Set lustre options for working directory",
+    doc title: "GFU: Set lustre options for working directory",
         desc: """
             Lustre options: 
                 -c -1 : a stripe_count of -1 means to stripe over all available OSTs.
@@ -13,7 +14,10 @@ set_stripe_gfu =
         constraints: "It is a non blocking stage (Fails in non lustre fs, but will return always true).",
         author: "davide.rambaldi@gmail.com"
 
-    exec """
-        $LSF setstripe -c -1 -i -1 -s 2M . 1>/dev/null 2>&1 || true;
-    """
+    produce("setstripe.log") {
+        exec """
+            $LSF setstripe -c -1 -i -1 -s 2M . 1>/dev/null 2>&1 || true;
+            $LSF getstripe . 1> $output 2>&1 || true;
+        """
+    }
 }
